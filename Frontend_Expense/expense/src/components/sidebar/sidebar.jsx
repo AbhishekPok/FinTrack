@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import sidebarIcon from './sidebaricons/sidebaricon.png';
+import styles from './sidebar.module.css';
 
-function DashboardLayout() {
+function SideBar() {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        offcanvas
+      <Button variant="primary" onClick={handleShow} className={styles.sidebarButton}>
+        <img src={sidebarIcon} alt = 'menu'/>
       </Button>
-
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Fintrack</Offcanvas.Title>
@@ -26,4 +26,4 @@ function DashboardLayout() {
   );
 }
 
-export default DashboardLayout;
+export default SideBar;

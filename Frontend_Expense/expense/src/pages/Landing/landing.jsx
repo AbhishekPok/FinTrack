@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom"; // ⬅️ Add this at the top
 import styles from "./landing.module.css"
+import NavbarLanding from '../../components/navbar/navbarlandingpage/navbar_landing';
 
 const features = [
   {
@@ -25,6 +26,7 @@ const LandingPage = () => {
 const navigate = useNavigate();
 return (
 <div>
+  <NavbarLanding />
 <section className={styles.herosection}>
   <Container className={styles.fintrackcontainer}>
     <Row className="align-items-center">
@@ -37,7 +39,7 @@ return (
         <div className={styles.herobuttons}>
           <Button
             onClick={() => navigate("/register")}
-            className={`${styles.herobutton} ${styles.primaryhero}`}
+            className={`${styles.herobutton} ${styles.secondaryhero}`}
           >
             Get Started
           </Button>

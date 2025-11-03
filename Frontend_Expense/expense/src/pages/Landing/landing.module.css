@@ -38,7 +38,7 @@
   align-items: center;
   overflow: hidden;
   position: relative;
-  padding: 60px 0; /* Reduced padding */
+  padding: 80px 0; 
 }
 
 /* Subtle animated ambient blobs */
@@ -84,27 +84,38 @@
 }
 
 .herotitle {
-  font-size: 2.8rem; /* More compact */
+  width: 70%; 
+  font-size: 2.8rem;
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 0.75rem;
   line-height: 1.15;
+  margin: 0 auto;
 }
 
 .herosubtitle {
+  width: 70%;
+  max-width: 600px;
   font-size: 1.05rem;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
   margin-bottom: 1.75rem;
-  max-width: 480px;
+  padding-bottom: 15%;
   font-weight: 400;
+  margin: 0 auto;
+  text-align: left;
 }
 
 /* Buttons */
 .herobuttons {
   display: flex;
+  max-width: 600px;
   gap: 14px;
   flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  padding-left: 550px;
+  padding-bottom: 0px;
 }
 
 .herobutton {
@@ -290,6 +301,7 @@
   padding: 120px 0;
   position: relative;
   overflow: hidden;
+  /* padding-top: -50px; */
 }
 
 .ctasection::before {
@@ -370,6 +382,7 @@
   text-align: center;
   padding: 40px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 25px;
 }
 
 .footertext {

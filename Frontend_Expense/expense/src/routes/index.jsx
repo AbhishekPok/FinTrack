@@ -1,8 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LoginPage from '../pages/Login/Login'
-// import PrivateRoute from './privateroutes'
 import RegisterPage from '../pages/Register/Register'
 import Landing from '../pages/Landing/landing'
+import HomePage from '../pages/Homepage/Homepage'
+
 const routes = createBrowserRouter([
     {
         path:"/",element: <Landing/>
@@ -12,6 +13,9 @@ const routes = createBrowserRouter([
     },
     {
         path:"/register",element:<RegisterPage/>
+    },
+    {
+        path:"/home",element:<HomePage/>
     }
 ])
 const AppRoutes = () => {
