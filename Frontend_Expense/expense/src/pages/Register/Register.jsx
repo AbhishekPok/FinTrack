@@ -9,6 +9,7 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
+    confrim_password: ""
   });
 
   const handleChange = (e) => {
@@ -35,6 +36,7 @@ const Register = () => {
               <Form.Group controlId="name" className="mb-3">
                 <Form.Label>Full Name</Form.Label>
                 <Form.Control
+                  className={styles.formcontrol}
                   type="text"
                   name="name"
                   placeholder="Enter your full name"
@@ -47,6 +49,7 @@ const Register = () => {
               <Form.Group controlId="email" className="mb-3">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                  className={styles.formcontrol}
                   type="email"
                   name="email"
                   placeholder="Enter your email"
@@ -59,9 +62,22 @@ const Register = () => {
               <Form.Group controlId="password" className="mb-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
+                  className={styles.formcontrol}
                   type="password"
                   name="password"
                   placeholder="Create a password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="password" className="mb-3">
+                <Form.Label>Confrim Password</Form.Label>
+                <Form.Control
+                  className={styles.formcontrol}
+                  type="password"
+                  name="password"
+                  placeholder="Confrim your password"
                   value={formData.password}
                   onChange={handleChange}
                   required

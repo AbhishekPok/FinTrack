@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LoginPage from '../pages/Login/Login'
 import RegisterPage from '../pages/Register/Register'
-import Landing from '../pages/Landing/landing'
+import Landing from '../pages/Landing/Landing'
 import HomePage from '../pages/Homepage/Homepage'
 
 const routes = createBrowserRouter([
