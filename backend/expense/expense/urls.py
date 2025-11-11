@@ -6,7 +6,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 #import for rest_framework
 from rest_framework import permissions
-from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 #import from written module
 from api.views import *
 
@@ -36,7 +36,7 @@ adminpattern = [
 ]
 registerpatterns = [
     path('api/user/register/', UserRegisterView.as_view(), name = 'register'),
-    path('api/token/', TokenRefreshView.as_view(), name = 'get_token'),
+    path('api/token/', TokenObtainPairView.as_view(), name = 'get_token'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name = 'refresh')
 ]
 createanddeletepatterns = [
