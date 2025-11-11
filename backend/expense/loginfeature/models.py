@@ -8,3 +8,6 @@ class User(models.Model):
 
     def __str__(self):
         return self.name, self.email, self.password, self.confirm_password, self.confirm_password
+from django.db import models
+
+# Create your models here.
