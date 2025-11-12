@@ -5,7 +5,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../common/constant";
 import { useState, useEffect} from "react";
 
 
-function PrivateRoute({Children}) {
+function ProtectedRoute({Children}) {
     const [IsAuthorized, setIsAuthorized] = useState(null)
 
     useEffect( () => {
@@ -56,4 +56,4 @@ function PrivateRoute({Children}) {
 }
 
 
-export default PrivateRoute;
+export default ProtectedRoute;

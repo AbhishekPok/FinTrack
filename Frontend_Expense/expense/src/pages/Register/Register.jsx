@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import styles from "./register.module.css";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../common/constant";
+import {api} from "../../common/api"
 
 const Register = () => {
   const navigate = useNavigate();
@@ -16,10 +18,16 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Registering:", formData);
-    navigate("/login");
+    try{
+      await api.post("api/user/register/",{formData})
+      navigate("/login");
+    }
+    catch(error){
+      alert(error)
+    }
   };
 
   return (
@@ -76,15 +84,15 @@ const Register = () => {
                 <Form.Control
                   className={styles.formcontrol}
                   type="password"
-                  name="password"
+                  name="confrim_password"
                   placeholder="Confrim your password"
-                  value={formData.password}
+                  value={formData.confrim_password}
                   onChange={handleChange}
                   required
                 />
               </Form.Group>
 
-              <Button type="submit" className={styles.registerbtn} size="lg" block>
+              <Button type="submit" className={styles.registerbtn} size="lg" onClick={handleSubmit}>
                 Sign Up
               </Button>
             </Form>

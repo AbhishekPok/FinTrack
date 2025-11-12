@@ -1,8 +1,15 @@
-export default function notfound (){
+export default function NotFound (){
+    
+    return(
     <>
     <div>
-        NotFound.............
-        Please wait the page is underConstruction.
+        <h1>
+            NotFound.............
+        </h1>
+        <p>
+            Please wait the page is under Construction.
+        </p>
     </div>
     </>
+)
 }

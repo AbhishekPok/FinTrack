@@ -30,10 +30,11 @@ class ExpenseDelete(generics.DestroyAPIView):
         return Expense.objects.filter(reported_by=user)
 
 
-class UserRegisterView(generics.CreateAPIView):
+class UserRegisterView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegisterSerializer
     permission_classes = [AllowAny]
+
 
 
 

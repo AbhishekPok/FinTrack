@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4268423e-8f4e-49f6-a5a5-dddf68a391be" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../Frontend_Expense/expense/src/common/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_Expense/expense/src/common/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend_Expense/expense/src/pages/Notfound/notfound.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_Expense/expense/src/pages/Notfound/notfound.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend_Expense/expense/src/routes/protectedroutes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_Expense/expense/src/routes/protectedroutes.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
