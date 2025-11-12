@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import styles from "./login.module.css";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../common/constant";
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,11 +13,19 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Mock login logic here
     console.log("Logging in:", formData);
-    navigate("/"); // Redirect to dashboard or home
+    try{
+      const resp = await api.post("/user/register/",{formData})
+      localStorage.setItem(ACCESS_TOKEN, resp.data.access)
+      localStorage.setItem(REFRESH_TOKEN, resp.data.access)
+      navigate("/home")
+    }
+    catch(error){
+      alert(error)
+    }
+    navigate("/");
   };
 
   return (
