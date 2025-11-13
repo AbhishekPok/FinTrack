@@ -33,7 +33,7 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path:"home/add-income",
+        path:"/add-income",
         element:
         <Protectedroutes>
           <AddIncome/>
