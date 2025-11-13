@@ -12,6 +12,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
 
+
+
 class ExpenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expense

@@ -1,67 +1,169 @@
 /* ========= Register Page ========= */
-
 .registerpage {
-  background: radial-gradient(
-      circle at 20% 20%,
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 60%
-    ),
-    linear-gradient(135deg, #4f46e5, #3b82f6);
-  min-height: 100vh;
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 85% 20%, rgba(96, 165, 250, 0.25) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(59, 130, 246, 0.2) 0%, transparent 60%),
+    linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #3b82f6 100%);
+  height: 100vh;
+  width: 100vw;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   overflow: hidden;
+  padding: 2rem 1rem;
 }
 
-/* Floating animated background orbs */
-.registerpage::before,
+/* Animated background pattern */
+.registerpage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(255, 255, 255, 0.03) 100px, rgba(255, 255, 255, 0.03) 200px),
+    repeating-linear-gradient(-45deg, transparent, transparent 100px, rgba(255, 255, 255, 0.02) 100px, rgba(255, 255, 255, 0.02) 200px);
+  z-index: 0;
+  animation: patternMove 30s linear infinite;
+}
+
+@keyframes patternMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(50px, 50px);
+  }
+}
+
+/* Floating light orbs */
 .registerpage::after {
   content: "";
   position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 30%),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.12) 0%, transparent 35%),
+    radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 28%);
   z-index: 0;
-  filter: blur(4px);
-  animation: orbFloat 10s ease-in-out infinite alternate;
-}
-
-.registerpage::before {
-  width: 300px;
-  height: 300px;
-  top: 10%;
-  left: -100px;
-}
-
-.registerpage::after {
-  width: 400px;
-  height: 400px;
-  bottom: -100px;
-  right: -120px;
-  animation-delay: 2s;
+  filter: blur(60px);
+  animation: orbFloat 15s ease-in-out infinite alternate;
 }
 
 @keyframes orbFloat {
   0% {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
   }
   100% {
-    transform: translateY(30px);
+    transform: translateY(40px) scale(1.05);
+    opacity: 1;
   }
 }
 
-/* Card Styling */
+/* Background Floating Money Icons */
+.backgroundicons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.floatingicon {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.15;
+  animation: floatMoney 8s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes floatMoney {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.15;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-30px) rotate(5deg);
+    opacity: 0.2;
+  }
+  75% {
+    opacity: 0.18;
+  }
+}
+
+/* Return to Landing Button */
+.returnbtn {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 50px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  color: #4f46e5;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  font-size: 0.95rem;
+}
+
+.returnbtn:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.returnbtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Container */
+.registercontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  z-index: 1;
+}
+
+/* Card - Landscape Orientation */
 .registercard {
   position: relative;
   background: #ffffff;
   border-radius: 24px;
-  padding:2rem 4rem 3rem 3rem;
   width: 100%;
-  max-width: 480px;
+  max-width: 950px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
   transition: all 0.4s ease;
   z-index: 1;
+  overflow: hidden;
 }
 
 .registercard:hover {
@@ -69,10 +171,155 @@
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
 }
 
+/* Card Layout - Side by Side */
+.cardlayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 450px;
+  max-height: calc(100vh - 200px);
+}
+
+/* Left Side - Image/Visual Content */
+.imageside {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.imageside::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: rotateGradient 20s linear infinite;
+}
+
+@keyframes rotateGradient {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.imagecontent {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #ffffff;
+}
+
+.iconwrapper {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.financeicon {
+  width: 200px;
+  height: 200px;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+}
+
+.floatingelements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.floatingcoin,
+.floatingchart,
+.floatingcard {
+  position: absolute;
+  font-size: 2rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.floatingcoin {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.floatingchart {
+  top: 20%;
+  right: 10%;
+  animation-delay: 1s;
+}
+
+.floatingcard {
+  bottom: 15%;
+  left: 15%;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.imagetitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.imagesubtitle {
+  font-size: 1rem;
+  opacity: 0.95;
+  line-height: 1.6;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Right Side - Form Content */
+.formside {
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
+/* Custom scrollbar for form side */
+.formside::-webkit-scrollbar {
+  width: 6px;
+}
+
+.formside::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.formside::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.formside::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 /* Titles */
 .title {
   font-weight: 800;
-  font-size: 2.2rem;
+  font-size: 1.85rem;
   color: #1e293b;
   margin-bottom: 0.5rem;
   text-align: center;
@@ -81,37 +328,34 @@
 .subtitle {
   text-align: center;
   color: #64748b;
-  margin-bottom: 2.2rem;
-  font-size: 1.05rem;
+  margin-bottom: 1.8rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
 
-/* ===== Form Styling ===== */
-
+/* Form Structure */
 form {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem; /* Equal spacing between all fields */
+  gap: 1.2rem;
 }
 
 .formgroup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* Space between label and input */
+  gap: 0.5rem;
 }
 
-/* All labels look consistent */
 form label {
   font-weight: 600;
   color: #334155;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   letter-spacing: 0.2px;
 }
 
-/* All inputs have same look */
 form input {
   border-radius: 10px !important;
-  padding: 12px 14px !important;
+  padding: 11px 14px !important;
   border: 1.5px solid #e2e8f0 !important;
   font-size: 0.95rem;
   color: #1e293b;
@@ -125,7 +369,6 @@ form input:focus {
   outline: none;
 }
 
-/* Placeholder styling */
 form input::placeholder {
   color: #94a3b8;
 }
@@ -140,7 +383,7 @@ form input::placeholder {
   width: 100%;
   transition: all 0.3s ease !important;
   box-shadow: 0 6px 18px rgba(79, 70, 229, 0.25);
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .registerbtn:hover {
@@ -149,10 +392,10 @@ form input::placeholder {
   box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
 }
 
-/* Link Section */
+/* Switch to Login Link */
 .switchtext {
   text-align: center;
-  margin-top: 1.75rem;
+  margin-top: 1.5rem;
   color: #6b7280;
   font-size: 0.95rem;
 }
@@ -185,22 +428,173 @@ form input::placeholder {
   width: 60%;
 }
 
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  padding: 1.25rem 2rem;
+  border-top: 1px solid rgba(79, 70, 229, 0.1);
+  z-index: 1000;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.footercontent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footerleft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.copyright,
+.trademark {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.trademark {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.footerright {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footerlink {
+  color: #4f46e5;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footerlink:hover {
+  color: #4338ca;
+}
+
+.separator {
+  color: #cbd5e1;
+  font-size: 0.875rem;
+}
+
 /* Responsive Design */
+@media (max-width: 992px) {
+  .cardlayout {
+    grid-template-columns: 1fr;
+  }
+
+  .imageside {
+    min-height: 300px;
+    padding: 2rem;
+  }
+
+  .financeicon {
+    width: 150px;
+    height: 150px;
+  }
+
+  .imagetitle {
+    font-size: 1.5rem;
+  }
+
+  .imagesubtitle {
+    font-size: 0.9rem;
+  }
+
+  .formside {
+    padding: 2rem 1.75rem;
+  }
+
+  .returnbtn {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.875rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .registerpage {
+    padding: 1rem;
+  }
+
   .registercard {
-    padding: 2.25rem 1.75rem;
-    max-width: 90%;
+    max-width: 100%;
+  }
+
+  .formside {
+    padding: 1.75rem 1.5rem;
   }
 
   .title {
-    font-size: 1.8rem;
+    font-size: 1.65rem;
   }
 
   .subtitle {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   form {
-    gap: 1.2rem;
+    gap: 1rem;
+  }
+
+  .footercontent {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .footerleft {
+    align-items: center;
+  }
+
+  .returnbtn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .returnbtn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .imageside {
+    min-height: 250px;
+    padding: 1.5rem;
+  }
+
+  .formside {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .footer {
+    padding: 1rem 1.5rem;
+  }
+
+  .footerright {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .separator {
+    display: none;
   }
 }
