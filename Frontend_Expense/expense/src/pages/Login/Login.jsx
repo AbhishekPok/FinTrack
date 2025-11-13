@@ -37,9 +37,12 @@ const Login = () => {
         username: formData.email, 
         password: formData.password
       };
-      const resp = await api.post("/user/login/", loginData);
+      const resp = await api.post("/api/token/", loginData);
       localStorage.setItem(ACCESS_TOKEN, resp.data.access);
       localStorage.setItem(REFRESH_TOKEN, resp.data.refresh); 
+
+      
+
       navigate("/home");
 
     } catch (error) {

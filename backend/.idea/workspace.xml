@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4268423e-8f4e-49f6-a5a5-dddf68a391be" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Frontend_Expense/expense/src/common/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_Expense/expense/src/common/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend_Expense/expense/src/pages/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_Expense/expense/src/pages/Login/Login.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend_Expense/expense/src/routes/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_Expense/expense/src/routes/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend_Expense/expense/src/routes/protectedroutes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_Expense/expense/src/routes/protectedroutes.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Notes/.obsidian/themes/Omarchy/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/../Notes/.obsidian/themes/Omarchy/theme.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense/api/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense/expense/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense/expense/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,6 +112,7 @@
       <workItem from="1762935622248" duration="3231000" />
       <workItem from="1763004601186" duration="1078000" />
       <workItem from="1763006868397" duration="10544000" />
+      <workItem from="1763022059021" duration="1793000" />
     </task>
     <servers />
   </component>
