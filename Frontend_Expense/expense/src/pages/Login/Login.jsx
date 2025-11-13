@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import styles from "./login.module.css";
+import {api} from "../../common/api"; 
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../common/constant";
 
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     // Prevent scrolling on mount
@@ -20,18 +23,38 @@ const Login = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (error) setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Logging in:", formData);
+    setLoading(true);
+    setError("");
+    
+    console.log("yo aairako xa", formData)
     try {
-      const resp = await api.post("/user/register/", { formData });
+      const loginData = {
+        username: formData.email, 
+        password: formData.password
+      };
+      const resp = await api.post("/user/login/", loginData);
       localStorage.setItem(ACCESS_TOKEN, resp.data.access);
-      localStorage.setItem(REFRESH_TOKEN, resp.data.access);
+      localStorage.setItem(REFRESH_TOKEN, resp.data.refresh); 
       navigate("/home");
+
     } catch (error) {
-      alert(error);
+      console.error("Login error:", error);
+      
+      if (error.response) {
+        const errorMessage = error.response.data.detail || error.response.data.message || "Invalid email or password. Please try again.";
+        setError(errorMessage);
+      } else if (error.request) {
+        setError("Cannot connect to server. Please check if the backend is running.");
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -124,6 +147,13 @@ const Login = () => {
                 <h2 className={styles.title}>Welcome Back</h2>
                 <p className={styles.subtitle}>Login to continue to FinTrack</p>
                 
+                {/* Error Message Display */}
+                {error && (
+                  <div className="alert alert-danger" role="alert">
+                    {error}
+                  </div>
+                )}
+                
                 <Form onSubmit={handleSubmit}>
                   <Form.Group controlId="email" className="mb-3">
                     <Form.Label>Email</Form.Label>
@@ -134,6 +164,7 @@ const Login = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
+                      disabled={loading}
                     />
                   </Form.Group>
 
@@ -146,11 +177,18 @@ const Login = () => {
                       value={formData.password}
                       onChange={handleChange}
                       required
+                      disabled={loading}
                     />
                   </Form.Group>
 
-                  <Button type="submit" className={styles.loginbtn} size="lg" block>
-                    Login
+                  <Button 
+                    type="submit" 
+                    className={styles.loginbtn} 
+                    size="lg" 
+                    block
+                    disabled={loading}
+                  >
+                    {loading ? "Logging in..." : "Login"}
                   </Button>
                 </Form>
 

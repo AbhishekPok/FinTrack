@@ -3,6 +3,10 @@ import LoginPage from '../pages/Login/Login'
 import RegisterPage from '../pages/Register/Register'
 import Landing from '../pages/Landing/Landing'
 import HomePage from '../pages/Homepage/Homepage'
+import AddExpense from '../pages/Homepage/addExpense/addExpense'
+import AddIncome from '../pages/Homepage/addIncome/addIncome'
+import ViewReports from '../pages/Homepage/viewReport/viewReport'
+import SetBudget from '../pages/Homepage/setBudget/setBudget'
 import NotFound from '../pages/Notfound/notfound'
 import Protectedroutes from '../routes/protectedroutes'
 
@@ -21,11 +25,40 @@ const routes = createBrowserRouter([
       { path: "register", element: <RegisterPage /> },
       {
         path: "home",
-        element: (
+        element: 
+        (
           <Protectedroutes>
             <HomePage />
           </Protectedroutes>
         ),
+      },
+      {
+        path:"home/add-income",
+        element:
+        <Protectedroutes>
+          <AddIncome/>
+        </Protectedroutes>
+      },
+      {
+        path:"home/add-expense",
+        element:
+        <Protectedroutes>
+          <AddExpense/>
+        </Protectedroutes>
+      },
+      {
+        path:"home/set-Budget",
+        element:
+        <Protectedroutes>
+          <SetBudget/>
+        </Protectedroutes>
+      },
+      {
+        path:"home/view-report",
+        element:
+        <Protectedroutes>
+          <ViewReports/>
+        </Protectedroutes>
       },
       { path: "*", element: <NotFound /> },
       { path: "logout", element : <logout />},
