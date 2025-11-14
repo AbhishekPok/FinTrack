@@ -1,0 +1,392 @@
+/* ========= Login Page ========= */
+.loginpage {
+  background: linear-gradient(135deg, #fff720, #3cd500);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 1rem;
+}
+
+
+
+/* Floating orbs */
+.orbOne,
+.orbTwo {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15), transparent);
+  z-index: 0;
+  filter: blur(16px);
+}
+
+.orbOne {
+  width: 280px;
+  height: 280px;
+  top: 15%;
+  right: -100px;
+  animation: orbFloat 10s ease-in-out infinite;
+}
+
+.orbTwo {
+  width: 350px;
+  height: 350px;
+  bottom: -100px;
+  right: -100px;
+  animation: orbFloat 10s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes orbFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(30px);
+  }
+}
+
+/* ========= Card ========= */
+.logincard {
+  position: relative;
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  transition: transform 0.3s ease;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.logincard:hover {
+  transform: translateY(-4px);
+}
+
+@media (max-width: 768px) {
+  .logincard {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+  }
+}
+
+/* ========= Left Side ========= */
+.cardLeft {
+  background: #3cd500;
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .cardLeft {
+    padding: 2rem 1.5rem;
+  }
+}
+
+.brandSection {
+  text-align: center;
+}
+
+.brandTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  color: white;
+}
+
+.brandSubtitle {
+  font-size: 1.1rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.imageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.currencySymbol {
+  width: 140px;
+  height: 140px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  font-weight: 700;
+  color: white;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.imageCaption {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  margin: 0;
+}
+
+/* ========= Right Side ========= */
+.cardRight {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .cardRight {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* ========= Header ========= */
+.cardHeader {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ========= Form ========= */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #1f2937;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+/* ========= Forgot Link ========= */
+.forgotLink {
+  background: transparent;
+  border: none;
+  color: #10b981;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.forgotLink:hover {
+  color: #059669;
+}
+
+/* ========= Submit Button ========= */
+.submitBtn {
+  width: 100%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  padding: 0.875rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+/* ========= Separator ========= */
+.separator {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 1.5rem 0;
+}
+
+/* ========= Footer (inside card) ========= */
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.footerText {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.createAccountBtn {
+  width: 100%;
+  background: white;
+  color: #10b981;
+  border: 2px solid #10b981;
+  padding: 0.875rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.returnhomebtn {
+  width: 50%;
+  background: white;
+  color: #10b981;
+  border: 2px solid #10b981;
+  padding: 0.875rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.createAccountBtn:hover {
+  background: #f0fdf4;
+  transform: translateY(-2px);
+}
+
+/* ========= Page Footer ========= */
+.pageFooter {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 900px;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.copyright {
+  font-size: 0.9rem;
+  color: white;
+  margin: 0;
+  font-weight: 500;
+}
+
+.footerLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.footerLink {
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.footerLink:hover {
+  color: white;
+}
+
+.footerDivider {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ========= Responsive ========= */
+@media (max-width: 640px) {
+  .loginpage {
+    padding: 1rem;
+  }
+
+  .brandTitle {
+    font-size: 2rem;
+  }
+
+  .brandSubtitle {
+    font-size: 1rem;
+  }
+
+  .currencySymbol {
+    width: 120px;
+    height: 120px;
+    font-size: 4rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .pageFooter {
+    padding: 1rem 1.5rem;
+  }
+
+  .footerLinks {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footerDivider {
+    display: none;
+  }
+}
