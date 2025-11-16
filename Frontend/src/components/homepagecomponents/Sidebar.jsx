@@ -1,7 +1,10 @@
 import { LayoutDashboard, Receipt, TrendingUp, FileText, LogOut } from 'lucide-react';
-import styles from '../Pages/Home/homepage.module.css';
+import { useNavigate } from 'react-router-dom';
+import styles from '../../Pages/Home/homepage.module.css';
 
-export function Sidebar({ currentView, onViewChange, onLogout, isOpen }) {
+export function Sidebar({ currentView, onViewChange, isOpen }) {
+  const navigate = useNavigate();
+
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'transactions', label: 'Transactions', icon: Receipt },
@@ -45,7 +48,13 @@ export function Sidebar({ currentView, onViewChange, onLogout, isOpen }) {
             <p className={styles.sidebarUserEmail}>test@test.com</p>
           </div>
         </div>
-        <button onClick={onLogout} className={styles.logoutButton}>
+        <button onClick={
+          ()=>{
+          localStorage.clear()
+          navigate("/")}
+          } 
+          className={styles.logoutButton}
+          >
           <LogOut className={styles.sidebarIcon} />
           <span>Logout</span>
         </button>

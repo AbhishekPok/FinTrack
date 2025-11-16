@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import styles from './login.module.css';
 import { useNavigate } from 'react-router-dom';
+import styles from './login.module.css';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -9,33 +9,34 @@ export default function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    navigate("/home");
   };
 
   return (
-    <div className={styles.loginpage}>
+    <div className={styles.page}>
       <div className={styles.orbOne} />
       <div className={styles.orbTwo} />
       
-      <div className={styles.logincard}>
-        <div className={styles.cardLeft}>
-          <div className={styles.brandSection}>
+      <div className={styles.card}>
+        <div className={styles.left}>
+          <div className={styles.brand}>
             <h1 className={styles.brandTitle}>FinTrack</h1>
-            <p className={styles.brandSubtitle}>Your Personal Finance Manager</p>
+            <p className={styles.brandText}>Your Personal Finance Manager</p>
           </div>
-          <div className={styles.imageContainer}>
-            <div className={styles.currencySymbol}>रु</div>
-            <p className={styles.imageCaption}></p>
+          <div className={styles.symbol}>
+            <div className={styles.symbolBox}>रु</div>
+            <p className={styles.symbolText}>Manage your finances in Nepali Rupees</p>
           </div>
         </div>
         
-        <div className={styles.cardRight}>
-          <div className={styles.cardHeader}> Rupees
+        <div className={styles.right}>
+          <div className={styles.header}>
             <h2 className={styles.title}>Welcome Back</h2>
             <p className={styles.subtitle}>Sign in to your account</p>
           </div>
           
           <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.formGroup}>
+            <div className={styles.group}>
               <label htmlFor="email" className={styles.label}>Email</label>
               <input
                 id="email"
@@ -48,7 +49,7 @@ export default function LoginPage() {
               />
             </div>
             
-            <div className={styles.formGroup}>
+            <div className={styles.group}>
               <label htmlFor="password" className={styles.label}>Password</label>
               <input
                 id="password"
@@ -61,38 +62,38 @@ export default function LoginPage() {
               />
             </div>
             
-            <button type="button" className={styles.forgotLink}>
+            <button type="button" className={styles.forgot}>
               Forgot password?
             </button>
             
-            <button type="submit" className={styles.submitBtn} onClick={()=>navigate("/home")}>
+            <button type="submit" className={styles.submit}>
               Sign In
             </button>
           </form>
           
-          <div className={styles.separator} />
+          <div className={styles.divider} />
           
-          <div className={styles.footer}>
-            <p className={styles.footerText}>Don't have an account?</p>
-            <button className={styles.createAccountBtn} onClick={()=>{navigate("register")}}>
+          <div className={styles.actions}>
+            <p className={styles.text}>Don't have an account?</p>
+            <button className={styles.create} onClick={() => navigate("/register")}>
               Create Account
             </button>
-             <button className={styles.returnhomebtn} onClick={()=>{navigate("/home")}}>
+            <button className={styles.home} onClick={() => navigate("/")}>
               Return Home
             </button>
           </div>
         </div>
       </div>
 
-      <footer className={styles.pageFooter}>
+      <footer className={styles.footer}>
         <div className={styles.footerContent}>
           <p className={styles.copyright}>© 2025 FinTrack. All rights reserved.</p>
-          <div className={styles.footerLinks}>
-            <span className={styles.footerLink}>Privacy Policy</span>
-            <span className={styles.footerDivider}>•</span>
-            <span className={styles.footerLink}>Terms of Service</span>
-            <span className={styles.footerDivider}>•</span>
-            <span className={styles.footerLink}>™ FinTrack is a trademark</span>
+          <div className={styles.links}>
+            <span className={styles.link}>Privacy Policy</span>
+            <span className={styles.dot}>•</span>
+            <span className={styles.link}>Terms of Service</span>
+            <span className={styles.dot}>•</span>
+            <span className={styles.link}>™ FinTrack is a trademark</span>
           </div>
         </div>
       </footer>

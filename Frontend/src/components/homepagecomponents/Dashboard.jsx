@@ -1,8 +1,8 @@
 import { ArrowUpRight, ArrowDownRight, TrendingUp } from 'lucide-react';
 import { IconCurrencyRupeeNepalese } from '@tabler/icons-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { mockTransactions, mockClusterData, mockSpendingTrends } from '../lib/mockData';
-import styles from '../styles/dashboard.module.css';
+import { mockTransactions, mockClusterData, mockSpendingTrends } from '../../lib/mockData';
+import styles from '../../styles/dashboard.module.css';
 
 export function Dashboard() {
   const totalIncome = mockTransactions
