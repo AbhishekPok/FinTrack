@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import Protectedroutes from './protectedroutes'
 
 // import from module
-// import Landing from "../Pages/Landing"
+import Landing from "../Pages/Landing/landing"
 import LoginPage from "../Pages/Login/Login"
 import RegisterPage from "../Pages/Register/Register"
 import HomePage from "../Pages/Home/home"
@@ -17,8 +17,8 @@ function RegisterandLogout() {
 }
 
 const routes = createBrowserRouter([
-    //   { path: "/", element: <Landing /> },
-      { path: "/", element: <LoginPage /> },
+      { path: "/", element: <Landing /> },
+      { path: "/login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
       {
         path: "home",
