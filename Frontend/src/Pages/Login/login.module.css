@@ -107,7 +107,7 @@
 
 /* ========= Left Side ========= */
 .left {
-  background: linear-gradient(135deg, #10abb9, #0891a5);
+  background:linear-gradient(135deg, #08a030, #06943c);
   padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
@@ -233,7 +233,7 @@
 
 .input:focus {
   outline: none;
-  border-color: #10abb9;
+  border-color: #06b912;
   box-shadow: 0 0 0 3px rgba(16, 171, 185, 0.1);
 }
 
@@ -244,7 +244,7 @@
 .forgot {
   background: transparent;
   border: none;
-  color: #10abb9;
+  color: #06b912;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
@@ -254,12 +254,12 @@
 }
 
 .forgot:hover {
-  color: #0891a5;
+  color: #06b912;
 }
 
 .submit {
   width: 100%;
-  background: linear-gradient(135deg, #10abb9, #0891a5);
+  background: linear-gradient(135deg, #089a36, #05882a);
   color: white;
   border: none;
   padding: 0.875rem 1.5rem;
@@ -300,8 +300,8 @@
 .create {
   width: 100%;
   background: white;
-  color: #10abb9;
-  border: 2px solid #10abb9;
+  color: #65a30d;
+  border: 2px solid #65a30d;
   padding: 0.875rem 1.5rem;
   border-radius: 50px;
   font-size: 1rem;
@@ -356,10 +356,9 @@
   gap: 0.75rem;
   text-align: center;
 }
-
 .copyright {
   font-size: 0.9rem;
-  color: white;
+  color: black;
   margin: 0;
   font-weight: 500;
 }
@@ -374,7 +373,7 @@
 }
 
 .link {
-  color: rgba(255, 255, 255, 0.9);
+  color: black;
   cursor: pointer;
   transition: color 0.3s ease;
 }
@@ -384,10 +383,11 @@
 }
 
 .dot {
-  color: rgba(255, 255, 255, 0.6);
+  color: black;
 }
 
 /* ========= Responsive ========= */
+
 @media (max-width: 640px) {
   .page {
     padding: 1rem;

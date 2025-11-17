@@ -107,7 +107,7 @@
 
 /* ========= Left Side ========= */
 .left {
-  background: linear-gradient(135deg, #10abb9, #0891a5);
+  background: linear-gradient(135deg, #08a030, #06943c);
   padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
@@ -202,7 +202,7 @@
 }
 
 .back:hover {
-  color: #10abb9;
+  color: #06b912;
 }
 
 .header {
@@ -253,7 +253,7 @@
 
 .input:focus {
   outline: none;
-  border-color: #10abb9;
+  border-color: #06b912;
   box-shadow: 0 0 0 3px rgba(16, 171, 185, 0.1);
 }
 
@@ -263,7 +263,7 @@
 
 .submit {
   width: 100%;
-  background: linear-gradient(135deg, #10abb9, #0891a5);
+  background: linear-gradient(135deg, #089a36, #05882a);
   color: white;
   border: none;
   padding: 0.875rem 1.5rem;
@@ -323,7 +323,7 @@
 
 .copyright {
   font-size: 0.9rem;
-  color: white;
+  color: black;
   margin: 0;
   font-weight: 500;
 }
@@ -338,7 +338,7 @@
 }
 
 .link {
-  color: rgba(255, 255, 255, 0.9);
+  color: black;
   cursor: pointer;
   transition: color 0.3s ease;
 }
@@ -348,7 +348,7 @@
 }
 
 .dot {
-  color: rgba(255, 255, 255, 0.6);
+  color: black;
 }
 
 /* ========= Responsive ========= */
