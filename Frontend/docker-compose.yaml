@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  fintrackfrontend:
+    build: .
+    container_name: fintrackfrontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ../Frontend:/app
+    stdin_open: true
+    tty: true
