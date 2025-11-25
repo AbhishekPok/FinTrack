@@ -79,11 +79,8 @@ export default function LandingPage({ onGetStarted, onLogin }) {
                 FinTrack</h1>
           </div>
           <div className={styles.headerButtons}>
-            <button className={styles.signInBtn} onClick={()=>{navigate("/login")}}>
-              Sign In
-            </button>
             <button className={styles.getStartedBtn} onClick={()=>{navigate("/login")}}>
-              Get Started
+              Sign In
               <ArrowRight className={styles.btnIcon} />
             </button>
           </div>
@@ -105,7 +102,7 @@ export default function LandingPage({ onGetStarted, onLogin }) {
             </p>
             <div className={styles.heroButtons}>
               <button className={styles.primaryBtn} onClick={()=>{navigate("/register")}}>
-                Start Free Trial
+                Get Started
                 <ArrowRight className={styles.btnIcon} />
               </button>
               <button className={styles.secondaryBtn} onClick={()=>{navigate("/login")}}>
