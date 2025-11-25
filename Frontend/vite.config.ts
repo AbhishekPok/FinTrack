@@ -54,7 +54,8 @@
       outDir: 'build',
     },
     server: {
-      port: 3000,
+      port: 5473,
       open: true,
+      // host: true,
     },
   });
