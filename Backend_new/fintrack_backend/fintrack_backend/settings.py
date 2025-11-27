@@ -30,7 +30,7 @@ WEBPAGE_APPS = [
     'budget',
     'analytics',
     'report',
-    'core',
+    # 'core',
 ]
 
 INSTALLED_APPS = [

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui//card';
 import { Badge } from '../ui//badge';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { mockClusterData, mockTransactions } from '../../lib/mockData';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui//table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 
 export function ClusteringInsights() {
   const [selectedCluster, setSelectedCluster] = useState(null);

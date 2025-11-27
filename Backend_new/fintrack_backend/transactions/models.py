@@ -1,3 +1,50 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
+from decimal import Decimal
 
-# Create your models here.
+
+class Transaction(models.Model):
+    TRANSACTION_TYPES = [
+        ('income', 'Income'),
+        ('expense', 'Expense'),
+    ]
+
+    CATEGORIES = [
+        ('Food & Beverages', 'Food & Beverages'),
+        ('Transportation', 'Transportation'),
+        ('Shopping', 'Shopping'),
+        ('Utilities', 'Utilities'),
+        ('Entertainment', 'Entertainment'),
+        ('Health & Fitness', 'Health & Fitness'),
+        ('Income', 'Income'),
+    ]
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='transactions'
+    )
+    amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal('0.01'))]
+    )
+    date = models.DateField()
+    merchant = models.CharField(max_length=255)
+    category = models.CharField(max_length=50, choices=CATEGORIES)
+    type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
+    notes = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-date', '-created_at']
+        indexes = [
+            models.Index(fields=['user', 'date']),
+            models.Index(fields=['user', 'category']),
+            models.Index(fields=['user', 'type']),
+        ]
+
+    def __str__(self):
+        return f"{self.merchant} - रु{self.amount} ({self.date})"

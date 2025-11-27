@@ -22,7 +22,7 @@ schema_view = get_schema_view(
 
 #URL patterns setups
 adminurlpatterns = [
-    path("/", admin.site.urls),
+    path("admin/", admin.site.urls),
 ]
 
 swaggerurlpatterns = [
@@ -31,8 +31,11 @@ swaggerurlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
-accounturlpatterns = [
+appurlpatterns = [
+
     path('accounts/', include('accounts.v1.urls')),
+    path('transactions/', include('transactions.v1.urls') ),
+    path('reports/', include('report.v1.urls')),
 ]
 
-urlpatterns = [] + adminurlpatterns + swaggerurlpatterns + accounturlpatterns
+urlpatterns = [] + adminurlpatterns + swaggerurlpatterns + appurlpatterns

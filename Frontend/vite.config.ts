@@ -56,6 +56,6 @@
     server: {
       port: 5473,
       open: true,
-      // host: true,
+      host: true,
     },
   });
