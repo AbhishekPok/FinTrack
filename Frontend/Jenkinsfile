@@ -14,10 +14,14 @@ pipeline {
                     cd Frontend
                     node --version
                     npm --version
-                    npm ci
+                    npm i
                     npm run build
-                    ls -la
                 '''
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing the stage.'
             }
         }
     }
