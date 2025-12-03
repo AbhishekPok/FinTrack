@@ -1,25 +1,44 @@
 import { ArrowUpRight, ArrowDownRight, TrendingUp } from 'lucide-react';
 import { IconCurrencyRupeeNepalese } from '@tabler/icons-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { mockTransactions, mockClusterData, mockSpendingTrends } from '../../lib/mockData';
+import { useEffect, useState } from 'react';
+import transactionService from '../../services/transaction';
 import styles from '../../styles/dashboard.module.css';
 
 export function Dashboard() {
-  const totalIncome = mockTransactions
-    .filter(t => t.type === 'income')
-    .reduce((sum, t) => sum + t.amount, 0);
-  
-  const totalExpenses = mockTransactions
-    .filter(t => t.type === 'expense')
-    .reduce((sum, t) => sum + t.amount, 0);
-  
-  const currentBalance = totalIncome - totalExpenses;
-  
-  const recentTransactions = mockTransactions.slice(0, 5);
-  
-  const topSpendingCategory = mockClusterData.reduce((max, cluster) => 
-    cluster.totalSpent > max.totalSpent ? cluster : max
-  , mockClusterData[0]);
+  const [stats, setStats] = useState({
+    total_income: 0,
+    total_expenses: 0,
+    balance: 0,
+    category_breakdown: { expense: {} }
+  });
+  const [recentTransactions, setRecentTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [statsData, recentData] = await Promise.all([
+          transactionService.getStats(),
+          transactionService.getRecent()
+        ]);
+        setStats(statsData);
+        setRecentTransactions(recentData);
+      } catch (error) {
+        console.error("Failed to fetch dashboard data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const topSpendingCategory = Object.entries(stats.category_breakdown?.expense || {})
+    .reduce((max, [category, data]) =>
+      data.total > max.total ? { category, total: data.total } : max
+      , { category: 'None', total: 0 });
+
+  if (loading) return <div className={styles.dashboard}>Loading...</div>;
 
   return (
     <div className={styles.dashboard}>
@@ -38,7 +57,7 @@ export function Dashboard() {
           </div>
           <div className={styles.cardContent}>
             <p className={`${styles.cardAmount} ${styles.cardAmountBalance}`}>
-              रु {currentBalance.toFixed(2)}
+              रु {stats.balance}
             </p>
             <p className={styles.cardSubtext}>Updated today</p>
           </div>
@@ -51,9 +70,9 @@ export function Dashboard() {
           </div>
           <div className={styles.cardContent}>
             <p className={`${styles.cardAmount} ${styles.cardAmountIncome}`}>
-              रु {totalIncome.toFixed(2)}
+              रु {stats.total_income}
             </p>
-            <p className={styles.cardSubtext}>This month</p>
+            <p className={styles.cardSubtext}>Total</p>
           </div>
         </div>
 
@@ -64,42 +83,23 @@ export function Dashboard() {
           </div>
           <div className={styles.cardContent}>
             <p className={`${styles.cardAmount} ${styles.cardAmountExpense}`}>
-              रु {totalExpenses.toFixed(2)}
+              रु {stats.total_expenses}
             </p>
-            <p className={styles.cardSubtext}>This month</p>
+            <p className={styles.cardSubtext}>Total</p>
           </div>
         </div>
       </div>
 
-      {/* Spending Trends Chart */}
+      {/* Spending Trends Chart - Placeholder for now as backend doesn't provide trend data yet */}
       <div className={styles.chartCard}>
         <div className={styles.chartHeader}>
           <TrendingUp className={styles.chartIcon} />
           <h2 className={styles.chartTitle}>Spending Trends</h2>
         </div>
         <div className={styles.chartContainer}>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={mockSpendingTrends}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="date" stroke="#64748b" />
-              <YAxis stroke="#64748b" />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '8px'
-                }}
-                formatter={(value) => `रु${value}`}
-              />
-              <Line 
-                type="monotone" 
-                dataKey="amount" 
-                stroke="#3b82f6" 
-                strokeWidth={2}
-                dot={{ fill: '#3b82f6', r: 4 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: '#64748b' }}>
+            Chart data not available
+          </div>
         </div>
       </div>
 
@@ -121,12 +121,11 @@ export function Dashboard() {
                   </div>
                   <p className={styles.transactionDate}>{transaction.date}</p>
                 </div>
-                <div className={`${styles.transactionAmount} ${
-                  transaction.type === 'income' 
-                    ? styles.transactionAmountIncome 
+                <div className={`${styles.transactionAmount} ${transaction.type === 'income'
+                    ? styles.transactionAmountIncome
                     : styles.transactionAmountExpense
-                }`}>
-                  {transaction.type === 'income' ? '+' : '-'}रु{transaction.amount.toFixed(2)}
+                  }`}>
+                  {transaction.type === 'income' ? '+' : '-'}रु{transaction.amount}
                 </div>
               </div>
             ))}
@@ -143,26 +142,26 @@ export function Dashboard() {
               <p className={styles.insightLabel}>Top Spending Category</p>
               <div className={styles.insightContent}>
                 <span className={styles.insightCategory}>{topSpendingCategory.category}</span>
-                <span 
+                <span
                   className={styles.insightAmount}
-                  style={{ color: topSpendingCategory.color }}
+                  style={{ color: '#dc2626' }}
                 >
-                  रु{topSpendingCategory.totalSpent.toFixed(2)}
+                  रु{topSpendingCategory.total}
                 </span>
               </div>
             </div>
-            
+
             <div className={styles.insightItem}>
               <p className={styles.insightLabel}>Monthly Trend</p>
               <p className={styles.insightText}>
-                Your spending has increased by 15% compared to last month. Consider reviewing your {topSpendingCategory.category.toLowerCase()} expenses.
+                Keep tracking your expenses to see trends.
               </p>
             </div>
 
             <div className={styles.insightItem}>
               <p className={styles.insightLabel}>Savings Goal</p>
               <p className={styles.insightText}>
-                You're on track to save ${(currentBalance * 0.2).toFixed(2)} this month. Keep it up!
+                You're on track to save ${(stats.balance * 0.2).toFixed(2)} this month. Keep it up!
               </p>
             </div>
           </div>

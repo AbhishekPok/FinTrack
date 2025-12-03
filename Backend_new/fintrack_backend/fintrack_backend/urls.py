@@ -38,4 +38,6 @@ appurlpatterns = [
     path('reports/', include('report.v1.urls')),
 ]
 
-urlpatterns = [] + adminurlpatterns + swaggerurlpatterns + appurlpatterns
+urlpatterns = [] + adminurlpatterns + swaggerurlpatterns + [
+    path('api/v1/', include(appurlpatterns)),
+]

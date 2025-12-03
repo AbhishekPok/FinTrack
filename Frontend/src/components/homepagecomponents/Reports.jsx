@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
@@ -8,15 +8,31 @@ import { Separator } from '../ui/separator';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { Badge } from '../ui/badge';
 import { Download, FileText, Calendar } from 'lucide-react';
-import { mockTransactions } from '../../lib/mockData';
+import transactionService from '../../services/transaction';
 
 export function Reports() {
   const [startDate, setStartDate] = useState('2025-10-01');
   const [endDate, setEndDate] = useState('2025-10-27');
   const [reportType, setReportType] = useState('all');
   const [reportGenerated, setReportGenerated] = useState(false);
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredTransactions = mockTransactions.filter(t => {
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const data = await transactionService.getAll();
+        setTransactions(data);
+      } catch (error) {
+        console.error("Failed to fetch transactions", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTransactions();
+  }, []);
+
+  const filteredTransactions = transactions.filter(t => {
     const transactionDate = new Date(t.date);
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -27,11 +43,11 @@ export function Reports() {
 
   const totalIncome = filteredTransactions
     .filter(t => t.type === 'income')
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + parseFloat(t.amount), 0);
 
   const totalExpenses = filteredTransactions
     .filter(t => t.type === 'expense')
-    .reduce((sum, t) => sum + t.amount, 0);
+    .reduce((sum, t) => sum + parseFloat(t.amount), 0);
 
   const netAmount = totalIncome - totalExpenses;
 
@@ -49,7 +65,7 @@ export function Reports() {
       t.amount.toString(),
       t.notes || ''
     ]);
-    
+
     const csvContent = [
       headers.join(','),
       ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
@@ -68,6 +84,8 @@ export function Reports() {
     // In a real application, you would use a library like jsPDF
     alert('PDF export functionality would be implemented here using a library like jsPDF');
   };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="space-y-6">
@@ -131,16 +149,16 @@ export function Reports() {
             <Button onClick={handleGenerateReport} className="flex-1">
               Generate Report
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={handleExportCSV}
               disabled={!reportGenerated}
             >
               <Download className="h-4 w-4 mr-2" />
               Export CSV
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={handleExportPDF}
               disabled={!reportGenerated}
             >
@@ -188,7 +206,7 @@ export function Reports() {
               </CardHeader>
               <CardContent>
                 <div className={netAmount >= 0 ? 'text-green-600' : 'text-red-600'}>
-                  ${netAmount.toFixed(2)}
+                  रु {netAmount.toFixed(2)}
                 </div>
               </CardContent>
             </Card>
@@ -228,7 +246,7 @@ export function Reports() {
                         </Badge>
                       </TableCell>
                       <TableCell className={`text-right ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
-                        {transaction.type === 'income' ? '+' : '-'}${transaction.amount.toFixed(2)}
+                        {transaction.type === 'income' ? '+' : '-'}रु {parseFloat(transaction.amount).toFixed(2)}
                       </TableCell>
                       <TableCell className="text-slate-500">
                         {transaction.notes || '-'}
@@ -259,7 +277,7 @@ export function Reports() {
                     <div className="bg-slate-50 p-4 rounded-lg">
                       <p className="text-slate-600">Net Amount</p>
                       <p className={`mt-1 ${netAmount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                        ${netAmount.toFixed(2)}
+                        रु {netAmount.toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -277,7 +295,7 @@ export function Reports() {
               <div className="bg-white p-4 rounded-lg border border-green-100">
                 <p className="text-green-900">Financial Health</p>
                 <p className="text-slate-700 mt-2">
-                  {netAmount >= 0 
+                  {netAmount >= 0
                     ? `You have a positive balance of रु${netAmount.toFixed(2)} for this period. Great job managing your finances!`
                     : `You have a deficit of रु${Math.abs(netAmount).toFixed(2)} for this period. Consider reviewing your expenses.`
                   }
@@ -287,7 +305,7 @@ export function Reports() {
               <div className="bg-white p-4 rounded-lg border border-green-100">
                 <p className="text-green-900">Spending Ratio</p>
                 <p className="text-slate-700 mt-2">
-                  {totalIncome > 0 
+                  {totalIncome > 0
                     ? `You're spending ${((totalExpenses / totalIncome) * 100).toFixed(1)}% of your income. ${(totalExpenses / totalIncome) < 0.8 ? 'You have good spending habits!' : 'Consider reducing expenses.'}`
                     : 'Add income transactions to see spending ratio.'
                   }

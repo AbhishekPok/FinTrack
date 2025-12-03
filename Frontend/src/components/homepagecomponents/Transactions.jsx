@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -9,10 +9,10 @@ import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Textarea } from '../ui/textarea';
 import { Plus, Search, ArrowUpDown, Pencil, Trash2 } from 'lucide-react';
-import { mockTransactions } from '../../lib/mockData';
+import transactionService from '../../services/transaction';
 
 export function Transactions() {
-  const [transactions, setTransactions] = useState(mockTransactions);
+  const [transactions, setTransactions] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
   const [filterType, setFilterType] = useState('all');
@@ -20,6 +20,7 @@ export function Transactions() {
   const [sortOrder, setSortOrder] = useState('desc');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -31,12 +32,27 @@ export function Transactions() {
     notes: '',
   });
 
-  const categories = ['Food & Beverages', 'Transportation', 'Shopping', 'Utilities', 'Entertainment', 'Health & Fitness', 'Income'];
+  const categories = ['Food & Beverages', 'Transportation', 'Shopping', 'Utilities', 'Entertainment', 'Health & Fitness', 'Income', 'Other'];
+
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
+  const fetchTransactions = async () => {
+    try {
+      const data = await transactionService.getAll();
+      setTransactions(data);
+    } catch (error) {
+      console.error("Failed to fetch transactions", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const resetForm = () => {
     setFormData({
       amount: '',
-      date: '',
+      date: new Date().toISOString().split('T')[0],
       merchant: '',
       category: '',
       type: 'expense',
@@ -44,43 +60,58 @@ export function Transactions() {
     });
   };
 
-  const handleAddTransaction = () => {
-    const newTransaction = {
-      id: (transactions.length + 1).toString(),
-      amount: parseFloat(formData.amount),
-      date: formData.date,
-      merchant: formData.merchant,
-      category: formData.category,
-      type: formData.type,
-      notes: formData.notes,
-    };
-    setTransactions([newTransaction, ...transactions]);
-    setIsAddDialogOpen(false);
-    resetForm();
+  const handleAddTransaction = async () => {
+    try {
+      const newTransaction = {
+        amount: parseFloat(formData.amount),
+        date: formData.date,
+        merchant: formData.merchant,
+        category: formData.category,
+        type: formData.type,
+        notes: formData.notes,
+      };
+      await transactionService.create(newTransaction);
+      fetchTransactions();
+      setIsAddDialogOpen(false);
+      resetForm();
+    } catch (error) {
+      console.error("Failed to add transaction", error);
+      alert("Failed to add transaction");
+    }
   };
 
-  const handleEditTransaction = () => {
+  const handleEditTransaction = async () => {
     if (!editingTransaction) return;
-    
-    setTransactions(transactions.map(t => 
-      t.id === editingTransaction.id 
-        ? {
-            ...editingTransaction,
-            amount: parseFloat(formData.amount),
-            date: formData.date,
-            merchant: formData.merchant,
-            category: formData.category,
-            type: formData.type,
-            notes: formData.notes,
-          }
-        : t
-    ));
-    setEditingTransaction(null);
-    resetForm();
+
+    try {
+      const updatedTransaction = {
+        amount: parseFloat(formData.amount),
+        date: formData.date,
+        merchant: formData.merchant,
+        category: formData.category,
+        type: formData.type,
+        notes: formData.notes,
+      };
+      await transactionService.update(editingTransaction.id, updatedTransaction);
+      fetchTransactions();
+      setEditingTransaction(null);
+      resetForm();
+    } catch (error) {
+      console.error("Failed to update transaction", error);
+      alert("Failed to update transaction");
+    }
   };
 
-  const handleDeleteTransaction = (id) => {
-    setTransactions(transactions.filter(t => t.id !== id));
+  const handleDeleteTransaction = async (id) => {
+    if (window.confirm("Are you sure you want to delete this transaction?")) {
+      try {
+        await transactionService.delete(id);
+        fetchTransactions();
+      } catch (error) {
+        console.error("Failed to delete transaction", error);
+        alert("Failed to delete transaction");
+      }
+    }
   };
 
   const startEdit = (transaction) => {
@@ -98,7 +129,7 @@ export function Transactions() {
   // Filter and sort transactions
   let filteredTransactions = transactions.filter(t => {
     const matchesSearch = t.merchant.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         t.category.toLowerCase().includes(searchQuery.toLowerCase());
+      t.category.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = filterCategory === 'all' || t.category === filterCategory;
     const matchesType = filterType === 'all' || t.type === filterType;
     return matchesSearch && matchesCategory && matchesType;
@@ -113,6 +144,8 @@ export function Transactions() {
     }
   });
 
+  if (loading) return <div>Loading...</div>;
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -120,7 +153,7 @@ export function Transactions() {
           <h1>Transactions</h1>
           <p className="text-slate-600 mt-1">Manage all your financial transactions</p>
         </div>
-        
+
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
             <Button onClick={resetForm}>
@@ -145,7 +178,7 @@ export function Transactions() {
                   </SelectContent>
                 </Select>
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="amount">Amount</Label>
                 <Input
@@ -213,7 +246,7 @@ export function Transactions() {
       <Card>
         <CardHeader>
           <CardTitle>All Transactions</CardTitle>
-          
+
           {/* Filters and Search */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
             <div className="relative">
@@ -258,7 +291,7 @@ export function Transactions() {
             </Button>
           </div>
         </CardHeader>
-        
+
         <CardContent>
           <Table>
             <TableHeader>
@@ -286,7 +319,7 @@ export function Transactions() {
                     </Badge>
                   </TableCell>
                   <TableCell className={`text-right ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
-                    {transaction.type === 'income' ? '+' : '-'}रु {transaction.amount.toFixed(2)}
+                    {transaction.type === 'income' ? '+' : '-'}रु {transaction.amount}
                   </TableCell>
                   <TableCell className="text-slate-500">{transaction.notes || '-'}</TableCell>
                   <TableCell className="text-right">
@@ -314,7 +347,7 @@ export function Transactions() {
                                 </SelectContent>
                               </Select>
                             </div>
-                            
+
                             <div className="space-y-2">
                               <Label htmlFor="edit-amount">Amount</Label>
                               <Input
@@ -374,7 +407,7 @@ export function Transactions() {
                           </DialogFooter>
                         </DialogContent>
                       </Dialog>
-                      
+
                       <Button
                         variant="ghost"
                         size="sm"
@@ -389,7 +422,7 @@ export function Transactions() {
               ))}
             </TableBody>
           </Table>
-          
+
           {filteredTransactions.length === 0 && (
             <div className="text-center py-12">
               <p className="text-slate-500">No transactions found</p>

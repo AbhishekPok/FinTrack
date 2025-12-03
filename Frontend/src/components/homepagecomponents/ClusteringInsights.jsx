@@ -1,15 +1,45 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui//card';
 import { Badge } from '../ui//badge';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { mockClusterData, mockTransactions } from '../../lib/mockData';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
+import transactionService from '../../services/transaction';
 
 export function ClusteringInsights() {
   const [selectedCluster, setSelectedCluster] = useState(null);
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [clusterData, setClusterData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [allTransactions, stats] = await Promise.all([
+          transactionService.getAll(),
+          transactionService.getStats()
+        ]);
+        setTransactions(allTransactions);
+
+        // Process stats for cluster data
+        const clusters = Object.entries(stats.category_breakdown?.expense || {}).map(([category, data], index) => ({
+          category,
+          totalSpent: data.total,
+          transactionCount: data.count,
+          percentage: (data.total / stats.total_expenses) * 100,
+          color: ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'][index % 6]
+        }));
+        setClusterData(clusters);
+      } catch (error) {
+        console.error("Failed to fetch data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const clusterTransactions = selectedCluster
-    ? mockTransactions.filter(t => t.category === selectedCluster && t.type === 'expense')
+    ? transactions.filter(t => t.category === selectedCluster && t.type === 'expense')
     : [];
 
   const RADIAN = Math.PI / 180;
@@ -25,6 +55,9 @@ export function ClusteringInsights() {
     );
   };
 
+  if (loading) return <div>Loading...</div>;
+  if (clusterData.length === 0) return <div>No expense data available for insights.</div>;
+
   return (
     <div className="space-y-6">
       <div>
@@ -39,7 +72,7 @@ export function ClusteringInsights() {
             <CardTitle className="text-slate-600">Total Categories</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-blue-600">{mockClusterData.length}</div>
+            <div className="text-blue-600">{clusterData.length}</div>
             <p className="text-slate-500 mt-1">Identified spending patterns</p>
           </CardContent>
         </Card>
@@ -49,8 +82,8 @@ export function ClusteringInsights() {
             <CardTitle className="text-slate-600">Top Category</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-blue-600">{mockClusterData[0].category}</div>
-            <p className="text-slate-500 mt-1">रु {mockClusterData[0].totalSpent.toFixed(2)} spent</p>
+            <div className="text-blue-600">{clusterData[0]?.category || 'N/A'}</div>
+            <p className="text-slate-500 mt-1">रु {clusterData[0]?.totalSpent.toFixed(2) || '0.00'} spent</p>
           </CardContent>
         </Card>
 
@@ -60,7 +93,7 @@ export function ClusteringInsights() {
           </CardHeader>
           <CardContent>
             <div className="text-blue-600">
-              रु {(mockClusterData.reduce((sum, c) => sum + c.totalSpent, 0) / mockClusterData.length).toFixed(2)}
+              रु {(clusterData.reduce((sum, c) => sum + c.totalSpent, 0) / clusterData.length).toFixed(2)}
             </div>
             <p className="text-slate-500 mt-1">Across all categories</p>
           </CardContent>
@@ -77,7 +110,7 @@ export function ClusteringInsights() {
             <ResponsiveContainer width="100%" height={400}>
               <PieChart>
                 <Pie
-                  data={mockClusterData}
+                  data={clusterData}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
@@ -88,18 +121,18 @@ export function ClusteringInsights() {
                   onClick={(data) => setSelectedCluster(data.category)}
                   style={{ cursor: 'pointer' }}
                 >
-                  {mockClusterData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
+                  {clusterData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
                       fill={entry.color}
                       opacity={selectedCluster === null || selectedCluster === entry.category ? 1 : 0.3}
                     />
                   ))}
                 </Pie>
-                <Tooltip 
-                  formatter={(value) => `$ रु{value.toFixed(2)}`}
-                  contentStyle={{ 
-                    backgroundColor: 'white', 
+                <Tooltip
+                  formatter={(value) => `रु${value.toFixed(2)}`}
+                  contentStyle={{
+                    backgroundColor: 'white',
                     border: '1px solid #e2e8f0',
                     borderRadius: '8px'
                   }}
@@ -118,26 +151,26 @@ export function ClusteringInsights() {
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={400}>
-              <BarChart data={mockClusterData}>
+              <BarChart data={clusterData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis 
-                  dataKey="category" 
+                <XAxis
+                  dataKey="category"
                   stroke="#64748b"
                   angle={-45}
                   textAnchor="end"
                   height={100}
                 />
                 <YAxis stroke="#64748b" />
-                <Tooltip 
-                  formatter={(value) => `$ रु{value.toFixed(2)}`}
-                  contentStyle={{ 
-                    backgroundColor: 'white', 
+                <Tooltip
+                  formatter={(value) => `रु${value.toFixed(2)}`}
+                  contentStyle={{
+                    backgroundColor: 'white',
                     border: '1px solid #e2e8f0',
                     borderRadius: '8px'
                   }}
                 />
                 <Bar dataKey="totalSpent" radius={[8, 8, 0, 0]}>
-                  {mockClusterData.map((entry, index) => (
+                  {clusterData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Bar>
@@ -164,16 +197,16 @@ export function ClusteringInsights() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {mockClusterData.map((cluster) => (
-                <TableRow 
+              {clusterData.map((cluster) => (
+                <TableRow
                   key={cluster.category}
                   className="cursor-pointer hover:bg-slate-50"
                   onClick={() => setSelectedCluster(cluster.category === selectedCluster ? null : cluster.category)}
                 >
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <div 
-                        className="w-3 h-3 rounded-full" 
+                      <div
+                        className="w-3 h-3 rounded-full"
                         style={{ backgroundColor: cluster.color }}
                       />
                       {cluster.category}
@@ -200,8 +233,8 @@ export function ClusteringInsights() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Transactions in {selectedCluster}</CardTitle>
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className="cursor-pointer"
                 onClick={() => setSelectedCluster(null)}
               >
@@ -225,7 +258,7 @@ export function ClusteringInsights() {
                     <TableCell>{transaction.date}</TableCell>
                     <TableCell>{transaction.merchant}</TableCell>
                     <TableCell className="text-right text-red-600">
-                      रु {transaction.amount.toFixed(2)}
+                      रु {transaction.amount}
                     </TableCell>
                     <TableCell className="text-slate-500">
                       {transaction.notes || '-'}
@@ -234,7 +267,7 @@ export function ClusteringInsights() {
                 ))}
               </TableBody>
             </Table>
-            
+
             {clusterTransactions.length === 0 && (
               <div className="text-center py-8">
                 <p className="text-slate-500">No transactions in this category</p>
@@ -245,35 +278,37 @@ export function ClusteringInsights() {
       )}
 
       {/* AI Recommendations */}
-      <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200">
-        <CardHeader>
-          <CardTitle className="text-purple-900">AI Recommendations</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-white p-4 rounded-lg border border-purple-100">
-            <p className="text-purple-900">Optimize Your {mockClusterData[0].category} Spending</p>
-            <p className="text-slate-700 mt-2">
-              You're spending रु {mockClusterData[0].totalSpent.toFixed(2)} on {mockClusterData[0].category.toLowerCase()}. 
-              Consider setting a monthly budget of रु {(mockClusterData[0].totalSpent * 0.85).toFixed(2)} to reduce costs by 15%.
-            </p>
-          </div>
+      {clusterData.length > 0 && (
+        <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200">
+          <CardHeader>
+            <CardTitle className="text-purple-900">AI Recommendations</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="bg-white p-4 rounded-lg border border-purple-100">
+              <p className="text-purple-900">Optimize Your {clusterData[0].category} Spending</p>
+              <p className="text-slate-700 mt-2">
+                You're spending रु {clusterData[0].totalSpent.toFixed(2)} on {clusterData[0].category.toLowerCase()}.
+                Consider setting a monthly budget of रु {(clusterData[0].totalSpent * 0.85).toFixed(2)} to reduce costs by 15%.
+              </p>
+            </div>
 
-          <div className="bg-white p-4 rounded-lg border border-purple-100">
-            <p className="text-purple-900">Track Your Progress</p>
-            <p className="text-slate-700 mt-2">
-              Monitor your spending patterns weekly to identify trends. Your most frequent category is {mockClusterData[0].category} 
-              with {mockClusterData[0].transactionCount} transactions this month.
-            </p>
-          </div>
+            <div className="bg-white p-4 rounded-lg border border-purple-100">
+              <p className="text-purple-900">Track Your Progress</p>
+              <p className="text-slate-700 mt-2">
+                Monitor your spending patterns weekly to identify trends. Your most frequent category is {clusterData[0].category}
+                with {clusterData[0].transactionCount} transactions this month.
+              </p>
+            </div>
 
-          <div className="bg-white p-4 rounded-lg border border-purple-100">
-            <p className="text-purple-900">Balance Your Budget</p>
-            <p className="text-slate-700 mt-2">
-              Consider redistributing some funds from {mockClusterData[0].category} to savings or investments to improve your financial health.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+            <div className="bg-white p-4 rounded-lg border border-purple-100">
+              <p className="text-purple-900">Balance Your Budget</p>
+              <p className="text-slate-700 mt-2">
+                Consider redistributing some funds from {clusterData[0].category} to savings or investments to improve your financial health.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
