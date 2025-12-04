@@ -4,7 +4,7 @@ from .views import TransactionViewSet
 
 # Create router and register viewsets
 router = DefaultRouter()
-router.register(r'transactions', TransactionViewSet, basename='transaction')
+router.register(r'', TransactionViewSet, basename='transaction')
 
 urlpatterns = [
     path('', include(router.urls)),
