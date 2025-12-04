@@ -53,7 +53,7 @@ export function Dashboard() {
         <div className={styles.card}>
           <div className={styles.cardHeader}>
             <h3 className={styles.cardTitle}>Current Balance</h3>
-            <IconCurrencyRupeeNepalese className={styles.cardIcon} style={{ color: '#2563eb' }} />
+            <IconCurrencyRupeeNepalese className={styles.cardIcon} style={{ color: '#089a36' }} />
           </div>
           <div className={styles.cardContent}>
             <p className={`${styles.cardAmount} ${styles.cardAmountBalance}`}>
@@ -122,8 +122,8 @@ export function Dashboard() {
                   <p className={styles.transactionDate}>{transaction.date}</p>
                 </div>
                 <div className={`${styles.transactionAmount} ${transaction.type === 'income'
-                    ? styles.transactionAmountIncome
-                    : styles.transactionAmountExpense
+                  ? styles.transactionAmountIncome
+                  : styles.transactionAmountExpense
                   }`}>
                   {transaction.type === 'income' ? '+' : '-'}रु{transaction.amount}
                 </div>

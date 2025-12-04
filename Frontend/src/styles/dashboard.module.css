@@ -33,7 +33,7 @@
   .headerTitle {
     font-size: 1.75rem;
   }
-  
+
   .headerSubtitle {
     font-size: 0.9rem;
   }
@@ -101,7 +101,7 @@
 }
 
 .cardAmountBalance {
-  color: #2563eb;
+  color: #089a36;
 }
 
 .cardAmountIncome {
@@ -145,7 +145,7 @@
 .chartIcon {
   width: 20px;
   height: 20px;
-  color: #2563eb;
+  color: #089a36;
 }
 
 .chartContainer {
@@ -241,11 +241,11 @@
 
 /* ========= AI Insights Card ========= */
 .insightsCard {
-  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+  background: linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%);
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #bfdbfe;
+  border: 1px solid #86efac;
 }
 
 .insightsHeader {
@@ -255,7 +255,7 @@
 .insightsTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1e3a8a;
+  color: #064e3b;
   margin: 0;
 }
 
@@ -269,19 +269,19 @@
   background: white;
   padding: 1rem;
   border-radius: 12px;
-  border: 1px solid #dbeafe;
+  border: 1px solid #dcfce7;
   transition: all 0.2s ease;
 }
 
 .insightItem:hover {
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.1);
   transform: translateY(-2px);
 }
 
 .insightLabel {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #1e3a8a;
+  color: #064e3b;
   margin: 0 0 0.5rem 0;
 }
 
@@ -316,17 +316,17 @@
     align-items: flex-start;
     gap: 0.75rem;
   }
-  
+
   .transactionAmount {
     align-self: flex-end;
   }
-  
+
   .insightContent {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
-  
+
   .chartContainer {
     height: 250px;
   }

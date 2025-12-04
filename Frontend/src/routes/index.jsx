@@ -6,6 +6,7 @@ import Landing from "../Pages/Landing/landing"
 import LoginPage from "../Pages/Login/Login"
 import RegisterPage from "../Pages/Register/Register"
 import HomePage from "../Pages/Home/home"
+import Profile from "../Pages/Profile/Profile"
 
 function Logout() {
   localStorage.clear()
@@ -26,8 +27,16 @@ const routes = createBrowserRouter([
       (
         <Protectedroutes>
           <HomePage />
-        </Protectedroutes>  
+        </Protectedroutes>
       ),
+  },
+  {
+    path: "profile",
+    element: (
+      <Protectedroutes>
+        <Profile />
+      </Protectedroutes>
+    ),
   },
   //   { path: "*", element: <NotFound /> },
 ]);

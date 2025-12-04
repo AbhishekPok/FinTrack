@@ -72,7 +72,7 @@ export function ClusteringInsights() {
             <CardTitle className="text-slate-600">Total Categories</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-blue-600">{clusterData.length}</div>
+            <div className="text-green-600">{clusterData.length}</div>
             <p className="text-slate-500 mt-1">Identified spending patterns</p>
           </CardContent>
         </Card>
@@ -82,7 +82,7 @@ export function ClusteringInsights() {
             <CardTitle className="text-slate-600">Top Category</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-blue-600">{clusterData[0]?.category || 'N/A'}</div>
+            <div className="text-green-600">{clusterData[0]?.category || 'N/A'}</div>
             <p className="text-slate-500 mt-1">रु {clusterData[0]?.totalSpent.toFixed(2) || '0.00'} spent</p>
           </CardContent>
         </Card>
@@ -92,7 +92,7 @@ export function ClusteringInsights() {
             <CardTitle className="text-slate-600">Average per Category</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-blue-600">
+            <div className="text-green-600">
               रु {(clusterData.reduce((sum, c) => sum + c.totalSpent, 0) / clusterData.length).toFixed(2)}
             </div>
             <p className="text-slate-500 mt-1">Across all categories</p>
@@ -279,29 +279,29 @@ export function ClusteringInsights() {
 
       {/* AI Recommendations */}
       {clusterData.length > 0 && (
-        <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200">
+        <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
           <CardHeader>
-            <CardTitle className="text-purple-900">AI Recommendations</CardTitle>
+            <CardTitle className="text-green-900">AI Recommendations</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="bg-white p-4 rounded-lg border border-purple-100">
-              <p className="text-purple-900">Optimize Your {clusterData[0].category} Spending</p>
+            <div className="bg-white p-4 rounded-lg border border-green-100">
+              <p className="text-green-900">Optimize Your {clusterData[0].category} Spending</p>
               <p className="text-slate-700 mt-2">
                 You're spending रु {clusterData[0].totalSpent.toFixed(2)} on {clusterData[0].category.toLowerCase()}.
                 Consider setting a monthly budget of रु {(clusterData[0].totalSpent * 0.85).toFixed(2)} to reduce costs by 15%.
               </p>
             </div>
 
-            <div className="bg-white p-4 rounded-lg border border-purple-100">
-              <p className="text-purple-900">Track Your Progress</p>
+            <div className="bg-white p-4 rounded-lg border border-green-100">
+              <p className="text-green-900">Track Your Progress</p>
               <p className="text-slate-700 mt-2">
                 Monitor your spending patterns weekly to identify trends. Your most frequent category is {clusterData[0].category}
                 with {clusterData[0].transactionCount} transactions this month.
               </p>
             </div>
 
-            <div className="bg-white p-4 rounded-lg border border-purple-100">
-              <p className="text-purple-900">Balance Your Budget</p>
+            <div className="bg-white p-4 rounded-lg border border-green-100">
+              <p className="text-green-900">Balance Your Budget</p>
               <p className="text-slate-700 mt-2">
                 Consider redistributing some funds from {clusterData[0].category} to savings or investments to improve your financial health.
               </p>

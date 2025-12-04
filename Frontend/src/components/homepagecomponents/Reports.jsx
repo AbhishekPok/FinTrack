@@ -11,8 +11,8 @@ import { Download, FileText, Calendar } from 'lucide-react';
 import transactionService from '../../services/transaction';
 
 export function Reports() {
-  const [startDate, setStartDate] = useState('2025-10-01');
-  const [endDate, setEndDate] = useState('2025-10-27');
+  const [startDate, setStartDate] = useState(new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0]);
+  const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
   const [reportType, setReportType] = useState('all');
   const [reportGenerated, setReportGenerated] = useState(false);
   const [transactions, setTransactions] = useState([]);
@@ -98,7 +98,7 @@ export function Reports() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-blue-600" />
+            <FileText className="h-5 w-5 text-green-600" />
             Report Configuration
           </CardTitle>
         </CardHeader>
@@ -178,7 +178,7 @@ export function Reports() {
                 <CardTitle className="text-slate-600">Total Transactions</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-blue-600">{filteredTransactions.length}</div>
+                <div className="text-green-600">{filteredTransactions.length}</div>
               </CardContent>
             </Card>
 

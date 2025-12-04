@@ -4,15 +4,14 @@
   background-attachment: fixed;
   background-size: cover;
   min-height: 100vh;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   padding: 2rem 1rem;
 }
 
@@ -70,9 +69,12 @@
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(30px);
   }

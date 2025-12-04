@@ -16,6 +16,7 @@ class Report(models.Model):
         on_delete=models.CASCADE,
         related_name='reports'
     )
+
     title = models.CharField(max_length=255)
     report_type = models.CharField(max_length=10, choices=REPORT_TYPES)
     start_date = models.DateField()

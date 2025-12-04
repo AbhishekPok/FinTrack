@@ -23,6 +23,11 @@ const authService = {
     isAuthenticated: () => {
         const token = localStorage.getItem('access_token');
         return !!token;
+    },
+
+    getProfile: async () => {
+        const response = await api.get('/accounts/profile/');
+        return response.data;
     }
 };
 
