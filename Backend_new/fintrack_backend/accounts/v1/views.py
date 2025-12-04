@@ -35,9 +35,10 @@ class RegisterUserView(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserProfileView(generics.RetrieveAPIView):
+class UserProfileView(generics.RetrieveUpdateAPIView):
     """
     GET: Retrieve the authenticated user's profile
+    PUT/PATCH: Update the authenticated user's profile
     """
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]

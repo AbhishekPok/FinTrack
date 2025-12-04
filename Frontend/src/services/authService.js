@@ -28,6 +28,11 @@ const authService = {
     getProfile: async () => {
         const response = await api.get('/accounts/profile/');
         return response.data;
+    },
+
+    updateProfile: async (userData) => {
+        const response = await api.patch('/accounts/profile/', userData);
+        return response.data;
     }
 };
 

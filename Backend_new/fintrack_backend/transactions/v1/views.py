@@ -132,3 +132,33 @@ class TransactionViewSet(viewsets.ModelViewSet):
         recent_transactions = self.get_queryset()[:10]
         serializer = self.get_serializer(recent_transactions, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def trends(self, request):
+        """
+        Get daily spending trends.
+        """
+        from django.db.models.functions import TruncDate
+
+        queryset = self.get_queryset()
+        
+        # Default to last 30 days if no date range provided
+        # (Logic can be enhanced to support custom ranges)
+        
+        trends = queryset.annotate(
+            date_only=TruncDate('date')
+        ).values('date_only').annotate(
+            income=Sum('amount', filter=Q(type='income')),
+            expense=Sum('amount', filter=Q(type='expense'))
+        ).order_by('date_only')
+
+        # Format for frontend
+        data = []
+        for entry in trends:
+            data.append({
+                'date': entry['date_only'],
+                'income': entry['income'] or 0,
+                'expense': entry['expense'] or 0
+            })
+
+        return Response(data)
