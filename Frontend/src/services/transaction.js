@@ -38,6 +38,11 @@ const transactionService = {
         return response.data;
     },
 
+    getTrends: async () => {
+        const response = await api.get('/transactions/trends/');
+        return response.data;
+    },
+
     getCategories: async () => {
         const response = await api.get('/transactions/categories/');
         return response.data;

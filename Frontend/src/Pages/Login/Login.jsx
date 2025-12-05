@@ -91,18 +91,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <p className={styles.copyright}>© 2025 FinTrack. All rights reserved.</p>
-          <div className={styles.links}>
-            <span className={styles.link}>Privacy Policy</span>
-            <span className={styles.dot}>•</span>
-            <span className={styles.link}>Terms of Service</span>
-            <span className={styles.dot}>•</span>
-            <span className={styles.link}>™ FinTrack is a trademark</span>
-          </div>
-        </div>
-      </footer>
+
     </div>
   );
 }

@@ -9,10 +9,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Badge } from '../ui/badge';
 import { Download, FileText, Calendar } from 'lucide-react';
 import transactionService from '../../services/transaction';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 export function Reports() {
-  const [startDate, setStartDate] = useState('2025-10-01');
-  const [endDate, setEndDate] = useState('2025-10-27');
+  const [startDate, setStartDate] = useState(new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0]);
+  const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
   const [reportType, setReportType] = useState('all');
   const [reportGenerated, setReportGenerated] = useState(false);
   const [transactions, setTransactions] = useState([]);
@@ -81,8 +83,54 @@ export function Reports() {
   };
 
   const handleExportPDF = () => {
-    // In a real application, you would use a library like jsPDF
-    alert('PDF export functionality would be implemented here using a library like jsPDF');
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFontSize(18);
+    doc.setTextColor(40);
+    doc.text('FinTrack Financial Report', 14, 22);
+
+    // Date Range
+    doc.setFontSize(11);
+    doc.setTextColor(100);
+    doc.text(`Period: ${startDate} to ${endDate}`, 14, 30);
+
+    // Summary
+    doc.setFontSize(12);
+    doc.setTextColor(40);
+    doc.text('Summary', 14, 40);
+
+    doc.setFontSize(10);
+    doc.text(`Total Income: ${totalIncome.toFixed(2)}`, 14, 48);
+    doc.text(`Total Expenses: ${totalExpenses.toFixed(2)}`, 14, 54);
+    doc.text(`Net Amount: ${netAmount.toFixed(2)}`, 14, 60);
+
+    // Table
+    const tableColumn = ["Date", "Merchant", "Category", "Type", "Amount", "Notes"];
+    const tableRows = [];
+
+    filteredTransactions.forEach(transaction => {
+      const transactionData = [
+        transaction.date,
+        transaction.merchant,
+        transaction.category,
+        transaction.type,
+        parseFloat(transaction.amount).toFixed(2),
+        transaction.notes || ''
+      ];
+      tableRows.push(transactionData);
+    });
+
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      startY: 70,
+      theme: 'grid',
+      styles: { fontSize: 8 },
+      headStyles: { fillColor: [22, 163, 74] } // Green-600
+    });
+
+    doc.save(`fintrack-report-${startDate}-to-${endDate}.pdf`);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -98,7 +146,7 @@ export function Reports() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-blue-600" />
+            <FileText className="h-5 w-5 text-green-600" />
             Report Configuration
           </CardTitle>
         </CardHeader>
@@ -178,7 +226,7 @@ export function Reports() {
                 <CardTitle className="text-slate-600">Total Transactions</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-blue-600">{filteredTransactions.length}</div>
+                <div className="text-green-600">{filteredTransactions.length}</div>
               </CardContent>
             </Card>
 

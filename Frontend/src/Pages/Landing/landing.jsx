@@ -1,10 +1,10 @@
-import { 
-  LayoutDashboard, 
-  CreditCard, 
-  PieChart, 
-  FileText, 
-  TrendingUp, 
-  Shield, 
+import {
+  LayoutDashboard,
+  CreditCard,
+  PieChart,
+  FileText,
+  TrendingUp,
+  Shield,
   Target,
   CheckCircle2,
   ArrowRight,
@@ -72,14 +72,11 @@ export default function LandingPage({ onGetStarted, onLogin }) {
       <header className={styles.header}>
         <div className={styles.headerContent}>
           <div className={styles.logo}>
-            <h1 className={styles.logoText}>
-              <p className = {styles.mainiconLogo}>
-              <IconCurrencyRupeeNepalese></IconCurrencyRupeeNepalese>
-              </p>
-                FinTrack</h1>
+            <IconCurrencyRupeeNepalese className={styles.logoIcon} />
+            <h1 className={styles.logoText}>FinTrack</h1>
           </div>
           <div className={styles.headerButtons}>
-            <button className={styles.getStartedBtn} onClick={()=>{navigate("/login")}}>
+            <button className={styles.getStartedBtn} onClick={() => { navigate("/login") }}>
               Sign In
               <ArrowRight className={styles.btnIcon} />
             </button>
@@ -96,16 +93,16 @@ export default function LandingPage({ onGetStarted, onLogin }) {
               <span className={styles.heroAccent}>Financial Future</span>
             </h2>
             <p className={styles.heroText}>
-              FinTrack helps you manage your money smarter with intelligent insights, 
-              automated tracking, and beautiful visualizations. Start making better 
+              FinTrack helps you manage your money smarter with intelligent insights,
+              automated tracking, and beautiful visualizations. Start making better
               financial decisions today.
             </p>
             <div className={styles.heroButtons}>
-              <button className={styles.primaryBtn} onClick={()=>{navigate("/register")}}>
+              <button className={styles.primaryBtn} onClick={() => { navigate("/register") }}>
                 Get Started
                 <ArrowRight className={styles.btnIcon} />
               </button>
-              <button className={styles.secondaryBtn} onClick={()=>{navigate("/login")}}>
+              <button className={styles.secondaryBtn} onClick={() => { navigate("/login") }}>
                 Sign In
               </button>
             </div>
@@ -120,11 +117,11 @@ export default function LandingPage({ onGetStarted, onLogin }) {
               </div>
             </div>
           </div>
-          
+
           <div className={styles.heroRight}>
             <div className={styles.heroImage}>
-              <img 
-                src="https://images.unsplash.com/photo-1763038311036-6d18805537e5?w=800" 
+              <img
+                src="https://images.unsplash.com/photo-1763038311036-6d18805537e5?w=800"
                 alt="FinTrack Dashboard"
               />
             </div>
@@ -152,7 +149,7 @@ export default function LandingPage({ onGetStarted, onLogin }) {
             Everything You Need to Manage Your Money
           </h2>
           <p className={styles.sectionText}>
-            Powerful features designed to give you complete control over your finances, 
+            Powerful features designed to give you complete control over your finances,
             from daily transactions to long-term planning.
           </p>
         </div>
@@ -222,19 +219,19 @@ export default function LandingPage({ onGetStarted, onLogin }) {
       <section className={styles.benefits}>
         <div className={styles.benefitsGrid}>
           <div className={styles.benefitsImage}>
-            <img 
-              src="https://images.unsplash.com/photo-1723987251277-18fc0a1effd0?w=800" 
+            <img
+              src="https://images.unsplash.com/photo-1723987251277-18fc0a1effd0?w=800"
               alt="Financial Analytics"
             />
           </div>
-          
+
           <div className={styles.benefitsContent}>
             <div className={styles.smallBadge}>Benefits</div>
             <h2 className={styles.sectionTitle}>
               Why Choose FinTrack?
             </h2>
             <p className={styles.sectionText}>
-              Join thousands of users who have taken control of their finances and 
+              Join thousands of users who have taken control of their finances and
               achieved their financial goals with FinTrack.
             </p>
             <div className={styles.benefitsList}>
@@ -247,7 +244,7 @@ export default function LandingPage({ onGetStarted, onLogin }) {
                 </div>
               ))}
             </div>
-            <button className={styles.primaryBtn} onClick={()=>{navigate("/register")}}>
+            <button className={styles.primaryBtn} onClick={() => { navigate("/register") }}>
               Start Your Free Trial
               <ArrowRight className={styles.btnIcon} />
             </button>
@@ -261,15 +258,15 @@ export default function LandingPage({ onGetStarted, onLogin }) {
           Ready to Transform Your Financial Life?
         </h2>
         <p className={styles.ctaText}>
-          Join thousands of users who are already managing their money smarter with FinTrack. 
+          Join thousands of users who are already managing their money smarter with FinTrack.
           Start your free trial today and experience the difference.
         </p>
         <div className={styles.ctaButtons}>
-          <button className={styles.ctaBtn} onClick={()=>{navigate("/register")}}>
+          <button className={styles.ctaBtn} onClick={() => { navigate("/register") }}>
             Get Started Free
             <ArrowRight className={styles.btnIcon} />
           </button>
-          <button className={styles.ctaBtnOutline} onClick={()=>{navigate("/login")}}>
+          <button className={styles.ctaBtnOutline} onClick={() => { navigate("/login") }}>
             Sign In
           </button>
         </div>
@@ -291,7 +288,7 @@ export default function LandingPage({ onGetStarted, onLogin }) {
                 Empowering you to take control of your financial future with intelligent tracking and insights.
               </p>
             </div>
-            
+
             <div className={styles.footerColumn}>
               <h4 className={styles.footerHeading}>Product</h4>
               <ul className={styles.footerLinks}>
@@ -301,7 +298,7 @@ export default function LandingPage({ onGetStarted, onLogin }) {
                 <li><a href="#">Roadmap</a></li>
               </ul>
             </div>
-            
+
             <div className={styles.footerColumn}>
               <h4 className={styles.footerHeading}>Company</h4>
               <ul className={styles.footerLinks}>
@@ -311,7 +308,7 @@ export default function LandingPage({ onGetStarted, onLogin }) {
                 <li><a href="#">Contact</a></li>
               </ul>
             </div>
-            
+
             <div className={styles.footerColumn}>
               <h4 className={styles.footerHeading}>Legal</h4>
               <ul className={styles.footerLinks}>
@@ -322,7 +319,7 @@ export default function LandingPage({ onGetStarted, onLogin }) {
               </ul>
             </div>
           </div>
-          
+
           <div className={styles.footerBottom}>
             <p>&copy; 2025 FinTrack. All rights reserved.</p>
           </div>

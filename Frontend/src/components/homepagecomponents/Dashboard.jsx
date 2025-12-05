@@ -13,17 +13,20 @@ export function Dashboard() {
     category_breakdown: { expense: {} }
   });
   const [recentTransactions, setRecentTransactions] = useState([]);
+  const [trends, setTrends] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [statsData, recentData] = await Promise.all([
+        const [statsData, recentData, trendsData] = await Promise.all([
           transactionService.getStats(),
-          transactionService.getRecent()
+          transactionService.getRecent(),
+          transactionService.getTrends()
         ]);
         setStats(statsData);
         setRecentTransactions(recentData);
+        setTrends(trendsData);
       } catch (error) {
         console.error("Failed to fetch dashboard data", error);
       } finally {
@@ -53,7 +56,7 @@ export function Dashboard() {
         <div className={styles.card}>
           <div className={styles.cardHeader}>
             <h3 className={styles.cardTitle}>Current Balance</h3>
-            <IconCurrencyRupeeNepalese className={styles.cardIcon} style={{ color: '#2563eb' }} />
+            <IconCurrencyRupeeNepalese className={styles.cardIcon} style={{ color: '#089a36' }} />
           </div>
           <div className={styles.cardContent}>
             <p className={`${styles.cardAmount} ${styles.cardAmountBalance}`}>
@@ -90,16 +93,47 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* Spending Trends Chart - Placeholder for now as backend doesn't provide trend data yet */}
+      {/* Spending Trends Chart */}
       <div className={styles.chartCard}>
         <div className={styles.chartHeader}>
-          <TrendingUp className={styles.chartIcon} />
+          <TrendingUp className={styles.chartIcon} style={{ color: '#089a36' }} />
           <h2 className={styles.chartTitle}>Spending Trends</h2>
         </div>
         <div className={styles.chartContainer}>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: '#64748b' }}>
-            Chart data not available
-          </div>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={trends}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <XAxis
+                dataKey="date"
+                stroke="#64748b"
+                tickFormatter={(value) => new Date(value).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+              />
+              <YAxis stroke="#64748b" />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'white',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px'
+                }}
+              />
+              <Line
+                type="monotone"
+                dataKey="income"
+                stroke="#16a34a"
+                strokeWidth={2}
+                dot={false}
+                name="Income"
+              />
+              <Line
+                type="monotone"
+                dataKey="expense"
+                stroke="#dc2626"
+                strokeWidth={2}
+                dot={false}
+                name="Expense"
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
 
@@ -122,8 +156,8 @@ export function Dashboard() {
                   <p className={styles.transactionDate}>{transaction.date}</p>
                 </div>
                 <div className={`${styles.transactionAmount} ${transaction.type === 'income'
-                    ? styles.transactionAmountIncome
-                    : styles.transactionAmountExpense
+                  ? styles.transactionAmountIncome
+                  : styles.transactionAmountExpense
                   }`}>
                   {transaction.type === 'income' ? '+' : '-'}रु{transaction.amount}
                 </div>

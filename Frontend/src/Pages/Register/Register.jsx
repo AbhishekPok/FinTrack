@@ -5,7 +5,8 @@ import authService from '../../services/authService';
 
 export default function Register({ onRegister }) {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState(''); // Added username state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +19,7 @@ export default function Register({ onRegister }) {
       return;
     }
     try {
-      await authService.register({ email, password, first_name: name, username }); // Added username to register call
+      await authService.register({ email, password, first_name: firstName, last_name: lastName, username }); // Added username to register call
       alert("Registration successful! Please login.");
       navigate("/login");
     } catch (error) {
@@ -54,17 +55,31 @@ export default function Register({ onRegister }) {
           </div>
 
           <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.group}>
-              <label htmlFor="name" className={styles.label}>Full Name</label>
-              <input
-                id="name"
-                type="text"
-                placeholder="Enter your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className={styles.input}
-              />
+            <div className={styles.nameRow}>
+              <div className={styles.group}>
+                <label htmlFor="firstName" className={styles.label}>First Name</label>
+                <input
+                  id="firstName"
+                  type="text"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                  className={styles.input}
+                />
+              </div>
+              <div className={styles.group}>
+                <label htmlFor="lastName" className={styles.label}>Last Name</label>
+                <input
+                  id="lastName"
+                  type="text"
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  className={styles.input}
+                />
+              </div>
             </div>
 
             {/* New username input field */}
@@ -135,18 +150,9 @@ export default function Register({ onRegister }) {
         </div>
       </div>
 
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <p className={styles.copyright}>© 2025 FinTrack. All rights reserved.</p>
-          <div className={styles.links}>
-            <span className={styles.link}>Privacy Policy</span>
-            <span className={styles.dot}>•</span>
-            <span className={styles.link}>Terms of Service</span>
-            <span className={styles.dot}>•</span>
-            <span className={styles.link}>™ FinTrack is a trademark</span>
-          </div>
-        </div>
-      </footer>
+
+
+
     </div>
   );
 }
