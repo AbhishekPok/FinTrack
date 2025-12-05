@@ -33,6 +33,28 @@ const authService = {
     updateProfile: async (userData) => {
         const response = await api.patch('/accounts/profile/', userData);
         return response.data;
+    },
+
+    // Admin methods
+    getAllUsers: async () => {
+        const response = await api.get('/accounts/admin/users/');
+        return response.data;
+    },
+
+    deleteUser: async (userId) => {
+        const response = await api.delete(`/accounts/admin/users/${userId}/`);
+        return response.data;
+    },
+
+    updateUser: async (userId, data) => {
+        const response = await api.patch(`/accounts/admin/users/${userId}/`, data);
+        return response.data;
+    },
+
+    // Admin create user (uses same endpoint but separate method for clarity)
+    createUser: async (userData) => {
+        const response = await api.post('/accounts/register/', userData);
+        return response.data;
     }
 };
 

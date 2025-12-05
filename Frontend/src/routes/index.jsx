@@ -7,6 +7,7 @@ import LoginPage from "../Pages/Login/Login"
 import RegisterPage from "../Pages/Register/Register"
 import HomePage from "../Pages/Home/home"
 import Profile from "../Pages/Profile/Profile"
+import AdminDashboard from "../Pages/Admin/AdminDashboard"
 
 function Logout() {
   localStorage.clear()
@@ -35,6 +36,14 @@ const routes = createBrowserRouter([
     element: (
       <Protectedroutes>
         <Profile />
+      </Protectedroutes>
+    ),
+  },
+  {
+    path: "admin",
+    element: (
+      <Protectedroutes>
+        <AdminDashboard />
       </Protectedroutes>
     ),
   },

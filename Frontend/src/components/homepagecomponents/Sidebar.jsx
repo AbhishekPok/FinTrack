@@ -1,9 +1,27 @@
-import { LayoutDashboard, Receipt, TrendingUp, FileText, LogOut, User } from 'lucide-react';
+import { LayoutDashboard, Receipt, TrendingUp, FileText, LogOut, User, Shield } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import authService from '../../services/authService';
+import { IconCurrencyRupeeNepalese } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../Pages/Home/homepage.module.css';
 
-export function Sidebar({ currentView, onViewChange, isOpen }) {
+export function Sidebar({ currentView, onViewChange, isOpen, toggleSidebar }) {
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const profile = await authService.getProfile();
+        if (profile.is_superuser || profile.is_staff) {
+          setIsAdmin(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch profile", error);
+      }
+    };
+    checkAdminStatus();
+  }, []);
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -14,9 +32,11 @@ export function Sidebar({ currentView, onViewChange, isOpen }) {
 
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
-      {/* Brand Section */}
-      <div className={styles.sidebarBrand}>
-        <div className={styles.sidebarLogo}>रु</div>
+      {/* Brand Section - Acts as Close Button */}
+      <div className={styles.sidebarBrand} onClick={toggleSidebar}>
+        <div className={styles.sidebarLogo}>
+          <IconCurrencyRupeeNepalese size={24} />
+        </div>
         <h1 className={styles.sidebarBrandText}>FinTrack</h1>
       </div>
 
@@ -40,13 +60,16 @@ export function Sidebar({ currentView, onViewChange, isOpen }) {
 
       {/* Footer Section */}
       <div className={styles.sidebarFooter}>
-        <div className={styles.sidebarUser}>
-          <div className={styles.sidebarUserAvatar}>AP</div>
-          <div className={styles.sidebarUserInfo}>
-            <p className={styles.sidebarUserName}>Abhishek Pokhrel</p>
-            <p className={styles.sidebarUserEmail}>test@test.com</p>
-          </div>
-        </div>
+        {isAdmin && (
+          <button
+            onClick={() => navigate('/admin')}
+            className={`${styles.sidebarNavItem} ${currentView === 'admin' ? styles.active : ''} mb-2`}
+          >
+            <Shield className={styles.sidebarIcon} />
+            <span>Admin Panel</span>
+          </button>
+        )}
+
         <button
           onClick={() => onViewChange('profile')}
           className={`${styles.sidebarNavItem} ${currentView === 'profile' ? styles.active : ''} mb-2`}
