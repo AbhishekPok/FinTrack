@@ -12,7 +12,7 @@ class TransactionFilter(django_filters.FilterSet):
     category = django_filters.CharFilter(field_name='category', lookup_expr='exact')
     type = django_filters.ChoiceFilter(
         field_name='type',
-        choices=Transaction.TRANSACTION_TYPES
+        choices=Transaction.TYPE_CHOICES
     )
     merchant = django_filters.CharFilter(field_name='merchant', lookup_expr='icontains')
 

@@ -220,7 +220,7 @@ export default function BudgetPlanning() {
             {/* Budget List */}
             <div className="grid grid-cols-1 gap-4">
                 {budgets.map((budget) => {
-                    const status = getBudgetStatus(budget.percentage_used);
+                    const status = getBudgetStatus(budget.percentage_used || 0);
 
                     return (
                         <Card key={budget.id}>
@@ -249,10 +249,10 @@ export default function BudgetPlanning() {
                                                 Spent: रु {parseFloat(budget.spent_amount || 0).toFixed(2)}
                                             </span>
                                             <span className={`font-semibold ${status.alert ? 'text-red-600' : 'text-green-600'}`}>
-                                                {budget.percentage_used.toFixed(1)}%
+                                                {(budget.percentage_used || 0).toFixed(1)}%
                                             </span>
                                         </div>
-                                        <Progress value={Math.min(budget.percentage_used, 100)} className="h-3" />
+                                        <Progress value={Math.min(budget.percentage_used || 0, 100)} className="h-3" />
                                         <div className="flex justify-between items-center">
                                             <div className="flex items-center gap-2">
                                                 {status.alert && (
@@ -269,12 +269,12 @@ export default function BudgetPlanning() {
                                                 )}
                                             </div>
                                             <span className="text-sm text-slate-600">
-                                                Remaining: रु {parseFloat(budget.remaining_amount || 0).toFixed(2)}
+                                                Remaining: रु {parseFloat(budget.remaining_amount || budget.amount || 0).toFixed(2)}
                                             </span>
                                         </div>
                                     </div>
 
-                                    <div className="pt-4 border-t flex justify-end">
+                                    <div className="pt-4 flex justify-end">
                                         <Button
                                             variant="destructive"
                                             size="sm"

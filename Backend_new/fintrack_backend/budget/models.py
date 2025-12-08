@@ -6,7 +6,7 @@ from transactions.models import Category
 
 
 class Budget(models.Model):
-    """User budgets for specific categories"""
+    """Budget model for tracking spending limits by category"""
     PERIOD_CHOICES = [
         ('weekly', 'Weekly'),
         ('monthly', 'Monthly'),
@@ -36,36 +36,11 @@ class Budget(models.Model):
     
     class Meta:
         ordering = ['-created_at']
-        unique_together = ['user', 'category', 'start_date', 'end_date']
+        unique_together = [('user', 'category', 'start_date', 'end_date')]
         indexes = [
-            models.Index(fields=['user', 'period']),
-            models.Index(fields=['user', 'start_date', 'end_date']),
+            models.Index(fields=['user', 'period'], name='budget_budg_user_id_6ecba7_idx'),
+            models.Index(fields=['user', 'start_date', 'end_date'], name='budget_budg_user_id_e80fb0_idx'),
         ]
     
     def __str__(self):
         return f"{self.category.name} - रु{self.amount} ({self.period})"
-    
-    @property
-    def spent_amount(self):
-        """Calculate total spent in this budget period"""
-        from transactions.models import Transaction
-        total = Transaction.objects.filter(
-            user=self.user,
-            category=self.category,
-            date__gte=self.start_date,
-            date__lte=self.end_date,
-            type='expense'
-        ).aggregate(models.Sum('amount'))['amount__sum'] or Decimal('0.00')
-        return total
-    
-    @property
-    def remaining_amount(self):
-        """Calculate remaining budget"""
-        return self.amount - self.spent_amount
-    
-    @property
-    def percentage_used(self):
-        """Calculate percentage of budget used"""
-        if self.amount == 0:
-            return 0
-        return (self.spent_amount / self.amount) * 100

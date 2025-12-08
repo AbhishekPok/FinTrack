@@ -1,7 +1,11 @@
-from django.urls import path
-from .views import BudgetListCreateView, BudgetDetailView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import BudgetViewSet
+
+# Create router for viewsets
+router = DefaultRouter()
+router.register(r'budgets', BudgetViewSet, basename='budget')
 
 urlpatterns = [
-    path('', BudgetListCreateView.as_view(), name='budget-list-create'),
-    path('<int:pk>/', BudgetDetailView.as_view(), name='budget-detail'),
+    path('', include(router.urls)),
 ]

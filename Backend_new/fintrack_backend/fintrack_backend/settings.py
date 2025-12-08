@@ -57,6 +57,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:5473",
+    "http://localhost:5474",
 ]
 
 ROOT_URLCONF = "fintrack_backend.urls"

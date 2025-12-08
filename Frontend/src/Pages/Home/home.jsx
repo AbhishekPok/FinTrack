@@ -11,47 +11,47 @@ import { Sidebar } from '../../components/homepagecomponents/Sidebar';
 import styles from './homepage.module.css';
 
 export default function HomePage() {
-  const [currentView, setCurrentView] = useState('dashboard');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [currentView, setCurrentView] = useState('dashboard');
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
 
-  return (
-    <div className={styles.appContainer}>
-      <button
-        className={styles.menuToggle}
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        aria-label="Toggle menu"
-      >
-        <IconCurrencyRupeeNepalese className={styles.menuToggleIcon} />
-        <span className={styles.menuToggleText}>FinTrack</span>
-      </button>
+    return (
+        <div className={styles.appContainer}>
+            <button
+                className={styles.menuToggle}
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                aria-label="Toggle menu"
+            >
+                <IconCurrencyRupeeNepalese className={styles.menuToggleIcon} />
+                <span className={styles.menuToggleText}>FinTrack</span>
+            </button>
 
-      <div
-        className={`${styles.overlay} ${sidebarOpen ? styles.visible : ''}`}
-        onClick={() => setSidebarOpen(false)}
-      />
+            <div
+                className={`${styles.overlay} ${sidebarOpen ? styles.visible : ''}`}
+                onClick={() => setSidebarOpen(false)}
+            />
 
-      <Sidebar
-        currentView={currentView}
-        onViewChange={(view) => {
-          setCurrentView(view);
-          setSidebarOpen(false);
-        }}
-        isOpen={sidebarOpen}
-        toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-      />
+            <Sidebar
+                currentView={currentView}
+                onViewChange={(view) => {
+                    setCurrentView(view);
+                    setSidebarOpen(false);
+                }}
+                isOpen={sidebarOpen}
+                toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+            />
 
-      <main className={styles.mainContent}>
-        <div className={styles.contentWrapper}>
-          {currentView === 'dashboard' && <Dashboard />}
-          {currentView === 'transactions' && <Transactions />}
-          {currentView === 'categories' && <Categories />}
-          {currentView === 'budgets' && <BudgetPlanning />}
-          {currentView === 'insights' && <ClusteringInsights />}
-          {currentView === 'reports' && <Reports />}
-          {currentView === 'profile' && <Profile />}
+            <main className={styles.mainContent}>
+                <div className={styles.contentWrapper}>
+                    {currentView === 'dashboard' && <Dashboard />}
+                    {currentView === 'transactions' && <Transactions />}
+                    {currentView === 'categories' && <Categories />}
+                    {currentView === 'budgets' && <BudgetPlanning />}
+                    {currentView === 'insights' && <ClusteringInsights />}
+                    {currentView === 'reports' && <Reports />}
+                    {currentView === 'profile' && <Profile />}
+                </div>
+            </main>
         </div>
-      </main>
-    </div>
-  );
+    );
 }
