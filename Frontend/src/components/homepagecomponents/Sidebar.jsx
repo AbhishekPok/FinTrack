@@ -1,4 +1,4 @@
-import { LayoutDashboard, Receipt, TrendingUp, FileText, LogOut, User, Shield } from 'lucide-react';
+import { LayoutDashboard, Receipt, TrendingUp, FileText, LogOut, User, Shield, FolderKanban, Wallet } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import authService from '../../services/authService';
 import { IconCurrencyRupeeNepalese } from '@tabler/icons-react';
@@ -26,6 +26,8 @@ export function Sidebar({ currentView, onViewChange, isOpen, toggleSidebar }) {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'transactions', label: 'Transactions', icon: Receipt },
+    { id: 'categories', label: 'Categories', icon: FolderKanban },
+    { id: 'budgets', label: 'Budget Planning', icon: Wallet },
     { id: 'insights', label: 'AI Insights', icon: TrendingUp },
     { id: 'reports', label: 'Reports', icon: FileText },
   ];

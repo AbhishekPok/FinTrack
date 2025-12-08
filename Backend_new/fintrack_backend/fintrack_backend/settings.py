@@ -17,11 +17,12 @@ ALLOWED_HOSTS = ["*"]
 
 PACKAGE_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'corsheaders',
     'django_filters',
     'drf_yasg',
-    'rest_auth'
+    'dj_rest_auth'
 ]
 
 WEBPAGE_APPS = [

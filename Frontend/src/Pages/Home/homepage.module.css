@@ -47,12 +47,12 @@
 .contentWrapper {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 5rem 2rem 2rem 2rem;
 }
 
 @media (max-width: 768px) {
   .contentWrapper {
-    padding: 1.5rem 1rem;
+    padding: 4.5rem 1rem 1.5rem 1rem;
   }
 }
 

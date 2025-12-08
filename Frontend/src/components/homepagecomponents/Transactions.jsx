@@ -10,9 +10,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Textarea } from '../ui/textarea';
 import { Plus, Search, ArrowUpDown, Pencil, Trash2 } from 'lucide-react';
 import transactionService from '../../services/transaction';
+import categoryService from '../../services/category';
 
 export function Transactions() {
   const [transactions, setTransactions] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
   const [filterType, setFilterType] = useState('all');
@@ -32,11 +34,19 @@ export function Transactions() {
     notes: '',
   });
 
-  const categories = ['Food & Beverages', 'Transportation', 'Shopping', 'Utilities', 'Entertainment', 'Health & Fitness', 'Income', 'Other'];
-
   useEffect(() => {
     fetchTransactions();
+    fetchCategories();
   }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const data = await categoryService.getAll();
+      setCategories(data);
+    } catch (error) {
+      console.error("Failed to fetch categories", error);
+    }
+  };
 
   const fetchTransactions = async () => {
     try {
@@ -128,9 +138,10 @@ export function Transactions() {
 
   // Filter and sort transactions
   let filteredTransactions = transactions.filter(t => {
+    const categoryName = t.category_detail?.name || '';
     const matchesSearch = t.merchant.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      t.category.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = filterCategory === 'all' || t.category === filterCategory;
+      categoryName.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = filterCategory === 'all' || t.category?.toString() === filterCategory;
     const matchesType = filterType === 'all' || t.type === filterType;
     return matchesSearch && matchesCategory && matchesType;
   });
@@ -219,7 +230,9 @@ export function Transactions() {
                   </SelectTrigger>
                   <SelectContent>
                     {categories.map(cat => (
-                      <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                      <SelectItem key={cat.id} value={cat.id.toString()}>
+                        {cat.icon} {cat.name}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -266,7 +279,7 @@ export function Transactions() {
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
                 {categories.map(cat => (
-                  <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                  <SelectItem key={cat.id} value={cat.id.toString()}>{cat.icon} {cat.name}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -311,7 +324,9 @@ export function Transactions() {
                   <TableCell>{transaction.date}</TableCell>
                   <TableCell>{transaction.merchant}</TableCell>
                   <TableCell>
-                    <Badge variant="outline">{transaction.category}</Badge>
+                    <Badge variant="outline">
+                      {transaction.category_detail?.icon} {transaction.category_detail?.name || 'Unknown'}
+                    </Badge>
                   </TableCell>
                   <TableCell>
                     <Badge variant={transaction.type === 'income' ? 'default' : 'secondary'}>

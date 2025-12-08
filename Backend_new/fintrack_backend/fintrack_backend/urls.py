@@ -35,6 +35,7 @@ appurlpatterns = [
 
     path('accounts/', include('accounts.v1.urls')),
     path('transactions/', include('transactions.v1.urls') ),
+    path('budgets/', include('budget.v1.urls')),
     path('reports/', include('report.v1.urls')),
 ]
 

@@ -4,6 +4,8 @@ import { Dashboard } from '../../components/homepagecomponents/Dashboard';
 import { Transactions } from '../../components/homepagecomponents/Transactions';
 import { ClusteringInsights } from '../../components/homepagecomponents/ClusteringInsights';
 import { Reports } from '../../components/homepagecomponents/Reports';
+import Categories from '../Categories/Categories';
+import BudgetPlanning from '../BudgetPlanning/BudgetPlanning';
 import Profile from '../Profile/Profile';
 import { Sidebar } from '../../components/homepagecomponents/Sidebar';
 import styles from './homepage.module.css';
@@ -43,6 +45,8 @@ export default function HomePage() {
         <div className={styles.contentWrapper}>
           {currentView === 'dashboard' && <Dashboard />}
           {currentView === 'transactions' && <Transactions />}
+          {currentView === 'categories' && <Categories />}
+          {currentView === 'budgets' && <BudgetPlanning />}
           {currentView === 'insights' && <ClusteringInsights />}
           {currentView === 'reports' && <Reports />}
           {currentView === 'profile' && <Profile />}
