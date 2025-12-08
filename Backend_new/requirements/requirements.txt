@@ -5,6 +5,7 @@ djangorestframework
 # Authentication
 djangorestframework-simplejwt
 django-cors-headers
+dj-rest-auth
 
 # Database
 psycopg2-binary
