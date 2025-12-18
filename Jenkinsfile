@@ -6,6 +6,7 @@ pipeline {
         stage("code fetch") {
             steps {
                 echo "Getting the code from the github"
+                git url: "https://github.com/AbhishekPok/FinTrack.git", branch: "main"
             }
         }
         stage("build the code") {
