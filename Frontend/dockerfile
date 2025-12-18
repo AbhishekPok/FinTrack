@@ -1,11 +1,17 @@
 FROM node:20-alpine
 
 WORKDIR /app
-COPY package*.json .
 
-RUN npm install
+# Install dependencies strictly
+COPY package*.json ./
+RUN npm ci
+
+# Copy source code with correct ownership
 COPY . .
+RUN chown -R node:node /app
+
+# Switch to non-root user
+USER node
 
 EXPOSE 3000
-CMD ["npm","run","dev"]
-
+CMD ["npm", "run", "dev"]

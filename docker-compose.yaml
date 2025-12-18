@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Backend_new
+      dockerfile: Dockerfile
+    container_name: fintrack_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Backend_new:/app
+    environment:
+      - DEBUG=1
+    command: python fintrack_backend/manage.py runserver 0.0.0.0:8000
+    networks:
+      - fintrack_network
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: dockerfile
+    container_name: fintrack_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    environment:
+      # Essential for hot reloading in some environments (WSL, Docker Toolbox)
+      - WATCHPACK_POLLING=true
+    stdin_open: true
+    tty: true
+    networks:
+      - fintrack_network
+    depends_on:
+      - backend
+
+networks:
+  fintrack_network:
+    driver: bridge
