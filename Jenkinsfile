@@ -1,11 +1,12 @@
 pipeline {
     agent {
-        label "agent1"
+        label "agent2"
     }
     stages {
         stage("code fetch") {
             steps {
                 echo "Getting the code from the github"
+                echo "Changed the workernode to newone"
                 git url: "https://github.com/AbhishekPok/FinTrack.git", branch: "main"
             }
         }
