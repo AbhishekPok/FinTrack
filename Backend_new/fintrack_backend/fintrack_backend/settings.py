@@ -55,6 +55,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
     "http://localhost:5173",
     "http://localhost:5473",
     "http://localhost:5474",
@@ -89,7 +90,7 @@ DATABASES = {
         "NAME": 'fintrack',
         "USER": 'abhishek',
         "PASSWORD" : 'abhishek@123',
-        "HOST" : 'localhost',
+        "HOST" : 'db',
         "PORT": 5432,
     }
 }
