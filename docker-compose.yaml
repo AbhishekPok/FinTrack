@@ -10,7 +10,7 @@ services:
       - ./Backend_new:/app
     environment:
       - DEBUG=1
-    command: python fintrack_backend/manage.py runserver 0.0.0.0:8000
+    command: sh -c "python fintrack_backend/manage.py migrate && python fintrack_backend/manage.py runserver 0.0.0.0:8000"
     networks:
       - fintrack_network
 
