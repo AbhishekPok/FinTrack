@@ -55,6 +55,11 @@ const authService = {
     createUser: async (userData) => {
         const response = await api.post('/auth/register/', userData);
         return response.data;
+    },
+
+    adminChangePassword: async (userId, newPassword) => {
+        const response = await api.put(`/auth/admin/users/${userId}/password/`, { new_password: newPassword });
+        return response.data;
     }
 };
 

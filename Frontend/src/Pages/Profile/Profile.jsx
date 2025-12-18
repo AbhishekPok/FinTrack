@@ -384,16 +384,7 @@ export default function Profile() {
                                             </p>
                                         </div>
                                     </div>
-                                    <Separator className={styles.separator} />
-                                    <div className={styles.detailItem}>
-                                        <Label className={styles.detailLabel}>Full Name</Label>
-                                        <p className={styles.detailValue}>
-                                            {user.first_name && user.last_name
-                                                ? `${user.first_name} ${user.last_name}`
-                                                : <span className={styles.detailValueNotSet}>Not set</span>
-                                            }
-                                        </p>
-                                    </div>
+
                                     <Separator className={styles.separator} />
                                     <div className={styles.detailItem}>
                                         <Label className={styles.detailLabel}>Email Address</Label>

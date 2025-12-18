@@ -46,6 +46,12 @@
     margin: 0;
 }
 
+.titleText p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
 .adminIcon {
     color: #dc2626;
     width: 32px;
@@ -108,11 +114,124 @@
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
-.tableContainer {
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.statCard {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.2s;
+}
+
+.statCard:hover {
+    transform: translateY(-2px);
+}
+
+.statIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.statIconUsers {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.statIconActive {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.statIconNew {
+    background: #f3e8ff;
+    color: #9333ea;
+}
+
+.statInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.statLabel {
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.statValue {
+    color: #0f172a;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Table Card */
+.tableCard {
     background: white;
     border-radius: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+}
+
+.tableHeader {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tableHeader h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #0f172a;
+}
+
+.userCount {
+    background: #f1f5f9;
+    color: #64748b;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+
+
+/* Chart Section */
+.chartSection {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.chartSection h2 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.25rem;
+    color: #0f172a;
+}
+
+.chartContainer {
+    width: 100%;
+    height: 300px;
+}
+
+.tableContainer {
     overflow-x: auto;
 }
 

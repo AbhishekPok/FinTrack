@@ -32,3 +32,6 @@ class CustomRegistrationSerializer(serializers.ModelSerializer):
             last_name=validated_data.get('last_name', '')
         )
         return user
+
+class AdminChangePasswordSerializer(serializers.Serializer):
+    new_password = serializers.CharField(required=True, min_length=8)
