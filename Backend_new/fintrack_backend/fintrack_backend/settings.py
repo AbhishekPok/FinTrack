@@ -88,8 +88,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": 'fintrack',
-        "USER": 'abhishek',
-        "PASSWORD" : 'abhishek@123',
+        "USER": 'postgres',
+        "PASSWORD" : 'postgres',
         "HOST" : 'db',
         "PORT": 5432,
     }
