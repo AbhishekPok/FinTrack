@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build:
@@ -35,7 +33,23 @@ services:
       - fintrack_network
     depends_on:
       - backend
+      - db
+
+  db:
+    build:
+      context: ./Database
+      dockerfile: Dockerfile
+    container_name: fintrack_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - fintrack_network
 
 networks:
   fintrack_network:
     driver: bridge
+
+volumes:
+  postgres_data:
